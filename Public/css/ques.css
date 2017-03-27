@@ -4,9 +4,11 @@ html {
 }
 
 body {
+    width: 100%;
+    height: 92.5%;
     margin: 0;
     padding: 0;
-    padding-top: 7.4%;
+    padding-top: 7.5%;
     background-size: 100% 100%;
     background-repeat: no-repeat;
     background-image: url(../images/ques-bg.png);
@@ -24,8 +26,9 @@ p {
 }
 
 /* height: 972  width: 545*/
-#choose {
+#choose, #fillblank, #fillblank-pro {
     width: 75.5%;
+    height: 100%;
     margin: 0 auto;
 }
 
@@ -38,19 +41,35 @@ p {
 }
 
 .ques-wrapper {
-    width: 100%;
-    height: 38.3%;
+    width: 96%;
+    background-color: #ffce00;
+    border-radius: 5px;
+    margin-top: 7%;
     margin-bottom: 5%;
-    background-size: cover;
-    background-image: url(../images/choose-ques-box.png);
+    padding: 2%;
+}
+
+.teen-voice-decorate {
+    position: absolute;
+    width: 28%;
+    height: 3%;
+    left: 11.14%;
+    top: 8.5%;
+}
+
+.cross-decorate {
+    position: absolute;
+    width: 9%;
+    height: 6%;
+    left: 81.1%;
+    top: 7.5%;
 }
 
 .ques-text {
+    background-color: #fff;
     color: #2a51a3;
     font-size: 12px;
-    padding-top: 16%;
-    padding-left: 5%;
-    padding-right: 7%;
+    padding: 7.5% 5% 5%;
     letter-spacing: 1px;
 }
 
@@ -116,5 +135,77 @@ p {
     letter-spacing: 2px;
     background-size: cover;
     background-image: url(../images/submit-answer-bg.png);
+}
+
+/* 普通填字题 */
+.text-frame {
+    padding: 2%;
+    width: 8.4%;
+    color: #1c3eba;
+    margin-top: 3px;
+    margin-right: 4%;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+    border: 2px solid #ffce00;
+
+}
+
+.text-frame-filled {
+    top: -7px;
+    position: relative;
+    background-color: #ffce00;
+}
+
+.text-frame-filled-right {
+    background-color: #00b615;
+}
+
+.text-frame-filled-error {
+    background-color: #ff001d;
+}
+
+.right-answer {
+    color: #1c3eba;
+    font-weight: bolder;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 6%;
+    padding-left: 5%;
+    visibility: hidden;
+}
+
+.choose-text-wrapper {
+    padding: 0 5%;
+    overflow: hidden;
+}
+
+.choose-text {
+    width: 18.75%;
+    text-align: center;
+    float: left;
+    border: 2px solid #1c3eba;
+    background-color: #fff;
+    color: #1c3eba;
+    border-radius: 6px;
+    margin-bottom: 6%;
+    margin-right: 5%;
+}
+
+.choose-text:nth-child(4), .choose-text:nth-child(7) {
+    margin-right: 0;
+}
+
+.choose-text-selected {
+    background-color: #1c3eba;
+    color: #fff;
+}
+
+.choose-text-selected-right {
+    background-color: #00b615;
+}
+
+.choose-text-selected-error {
+    background-color: #ff001d;
 }
 
