@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                background-size: cover;
+                background-image: url(__PUBLIC__/images/index-bg.png);
+            }
+            .start {
+                width: 40.3%;
+                height: 6.5%;
+                position: absolute;
+                top: 66%;
+                left: 28.3%;
+                background-color: red;
+            }
+            .rank {
+                width: 40.3%;
+                height: 6.5%;
+                position: absolute;
+                top: 76.5%;
+                left: 28.3%;
+                background-color: red;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="start"></div>
+        <div class="rank"></div>
+    </body>
+    <script>
+
+        window.onload = function () {
+            // 答题页面
+            document.querySelector('.start').addEventListener('click', function () {
+                alert('message');
+            });
+            // 榜单页面
+            document.querySelector('.start').addEventListener('click', function () {
+                alert('message');
+            });
+        };
+
+    </script>
+</html>

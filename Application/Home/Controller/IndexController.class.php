@@ -1,6 +1,6 @@
 <?php
 namespace Home\Controller;
-use Org\Util\String;
+// use Org\Util\String;
 use Think\Controller;
 
 class IndexController extends BaseController {
@@ -9,7 +9,12 @@ class IndexController extends BaseController {
     private $appid = 'wx81a4a4b77ec98ff4';
     private $acess_token = 'gh_68f0a1ffc303';
     public function index() {
-     echo __APP__.'/Public/images/';
+     // echo __APP__.'/Public/images/';
+        $this->display();
+    }
+
+    public function ques() {
+        $this->display();
     }
 
     public function questions() {
@@ -172,7 +177,7 @@ class IndexController extends BaseController {
     }
 
     public function JSSDKSignature(){
-        $string = new String();
+        // $string = new String();
         $jsapi_ticket =  $this->getTicket();
         $data['jsapi_ticket'] = $jsapi_ticket['data'];
         $data['noncestr'] = $string->randString();
