@@ -4,10 +4,16 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
         <style>
+
+            html {
+                height: 100%;
+            }
+
             body {
                 margin: 0;
                 padding: 0;
-                background-size: cover;
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
                 background-image: url(__PUBLIC__/images/index-bg.png);
             }
             .start {
@@ -37,11 +43,11 @@
         window.onload = function () {
             // 答题页面
             document.querySelector('.start').addEventListener('click', function () {
-                alert('message');
+                location.href = 'Index/ques';
             });
             // 榜单页面
-            document.querySelector('.start').addEventListener('click', function () {
-                alert('message');
+            document.querySelector('.rank').addEventListener('click', function () {
+                // alert('message');
             });
         };
 
