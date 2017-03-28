@@ -1,7 +1,6 @@
 <?php
 namespace Home\Controller;
-// use Org\Util\String;
-use Think\Controller;
+ use Org\Util\String;
 
 class IndexController extends BaseController {
     private $total = 5;
@@ -161,7 +160,7 @@ class IndexController extends BaseController {
     }
 
     public function JSSDKSignature(){
-        // $string = new String();
+         $string = new String();
         $jsapi_ticket =  $this->getTicket();
         $data['jsapi_ticket'] = $jsapi_ticket['data'];
         $data['noncestr'] = $string->randString();
