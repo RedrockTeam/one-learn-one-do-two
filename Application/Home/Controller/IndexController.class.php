@@ -74,12 +74,11 @@ class IndexController extends BaseController {
         $users = M('users');
         $openid = session('openid');
         $user = $users->where(array('openid' => $openid))->find();
-        $map['count'] = array('GT', $user['count']);
+        $map['count'] = array('EGT', $user['count']);
         $rank = $users->where($map)->count();
-        $rank += 1;
         $list = $users->order('count desc')->field('nickname, imgurl as avatar')->limit(10)->select();
-        if ($rank <= 50) {
-            $real = $users->order('count desc')->field('nickname, imgurl')->limit(50)->select();
+        if ($rank <= 10) {
+            $real = $users->order('count desc')->field('nickname, imgurl')->limit(10)->select();
         }
         foreach ($real as $key => $value) {
             if ($value['nickname'] == $user['nickname']) {
@@ -88,6 +87,15 @@ class IndexController extends BaseController {
         }
         if ($user['count'] == 0) {
             $rank = '∞';
+        }
+        $num = 1;
+        foreach ($list as &$v) {
+            if ($num < 4) {
+                $v['rank'] = 'rank'.$num.'.png';
+            } else {
+                $v['rank'] = $num;
+            }
+            $num++;
         }
         $this->ajaxReturn(array(
             'status' => 200,
