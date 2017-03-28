@@ -9,7 +9,8 @@ class IndexController extends BaseController {
     private $appid = 'wx81a4a4b77ec98ff4';
     private $acess_token = 'gh_68f0a1ffc303';
     public function index() {
-
+        //todo jssdk
+        echo '';
     }
 
     public function question() {
@@ -38,9 +39,9 @@ class IndexController extends BaseController {
 
         $currentLearn = json_decode($user['today_learn_id']);
         if ($user['current'] < $this->chooseCount) {
-            $data = $this->fillblank($currentLearn, $user['current']);
+            $data['question'] = $this->fillblank($currentLearn, $user['current']);
         } elseif ($user['current'] >= $this->chooseCount && $user['current'] < $this->total){
-            $data = $this->choose($currentLearn);
+            $data['question'] = $this->choose($currentLearn);
         } else {
             $this->ajaxReturn(array(
                 'status' => 500,
