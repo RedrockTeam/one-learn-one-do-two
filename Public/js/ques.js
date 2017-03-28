@@ -1,78 +1,24 @@
 $(function() {
 
+    // 样式调整
     var screen = {
         width: $(window).width(),
         height: $(window).height()
     };
-
+    // 定高
     $('#choose').css({
         height: $(window).height() * 0.759
     });
 
-    $('.answer-box .answer-option').find('span').css('line-height', ($('.answer-box .answer-option').eq(0).height() - 2) + 'px');
-
-    for (var i = 0; i < $('.answer-box .answer-text').length; i++) {
-        $('.answer-box .answer-text').eq(i).css(
-            'top',
-            (($('.answer-box').height() - 6 - $('.answer-box .answer-text').eq(i).height()) / 2) + 'px'
-        );
-    }
-
-    // 文字居中
-    $('.submit-answer').css('line-height', $('.submit-answer').height() - 4 + 'px');
 
 
-    // 选择题是否选择答案flag
-    var isSelected = false;
-    // 做的题目数
-    var quesCount = 0;
-
-    // 选择题选项点击逻辑
-    $('#choose').on('click', '.answer-box', function(event) {
-        var box = $(event.currentTarget);
-        // 如果未选择任何选项
-        if (!isSelected) {
-            box.addClass('answer-box-selected');
-            box.find('.answer-text').addClass('answer-text-selected');
-            box.find('.answer-option').addClass('answer-option-selected');
-            isSelected = !isSelected;
-        } else {
-            // 如果选择的是别的选项
-            if (box.hasClass('answer-box-selected')) {
-                box.removeClass('answer-box-selected');
-                box.find('.answer-text').removeClass('answer-text-selected');
-                box.find('.answer-option').removeClass('answer-option-selected');
-                isSelected = !isSelected;
-            } else {
-                // 先把被选中的去除
-                for (var i = 0; i < $('.answer-box').length; i++) {
-                    var _box = $('.answer-box').eq(i);
-                    if (_box.hasClass('answer-box-selected')) {
-                        _box.removeClass('answer-box-selected');
-                        _box.find('.answer-text').removeClass('answer-text-selected');
-                        _box.find('.answer-option').removeClass('answer-option-selected');
-                    }
-                }
-                box.addClass('answer-box-selected');
-                box.find('.answer-text').addClass('answer-text-selected');
-                box.find('.answer-option').addClass('answer-option-selected');
-                isSelected = true;
-            }
+    //
+    $.get('question', function(response) {
+        if (response.status == 200) {
+            loadNextQues(response.data.question);
         }
     });
 
-    // 如果选择了答案
-    $('.submit-answer').on('click', function(event) {
-        if (isSelected) {
-            $('#choose').addClass('animated bounceOut');
-            $('#choose').css('display', 'none');
-            initFillBlank('为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是', mock())
-        }
-    });
-
-    // $('#choose').addClass('animated bounceOut');
-    // $('#choose').css('display', 'none');
-    // initFillBlank('为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是', mock().options, mock().answer)
 
     function mock() {
         var str = '为了健康红烧鸡块你好但我活动活动';
@@ -93,11 +39,138 @@ $(function() {
         };
     }
 
+    // 加载下一题
+    function loadNextQues(quesInfo) {
+        if (quesInfo.type == 'choose') {
+            initFillChoose(quesInfo.question, quesInfo.options, quesInfo.answer);
+        } else {
+            initFillBlank(quesInfo.question, quesInfo.options, quesInfo.answer, '7.png');
+        }
+    }
 
-    function initFillChoose(ques, )
+    // 初始化选择题
+    function initFillChoose(ques, options, answer) {
+        var chooseLock = false;
 
-    // 初始化填字题
-    function initFillBlank(ques, options, answer) {
+        // 题目文字
+        $('#choose .ques-text').text(ques);
+
+        // 选项模板
+        var optionTpl = '';
+        for (var letter in options) {
+            optionTpl += '<div class="answer-box" data-option="' + letter + '">';
+            optionTpl += '<div class="answer-option"><span>' + letter.toUpperCase() + '</span></div>';
+            optionTpl += '<div class="answer-text">' + options[letter] + '</div></div>';
+            if (letter == 'a') {
+                optionTpl += '<div class="left-join"></div>';
+            }
+
+            if (letter == 'b') {
+                optionTpl += '<div class="right-join"></div>';
+            }
+        }
+        $('#choose .answer-wrapper').append(optionTpl);
+
+        // 设置选项文字上下居中
+        for (var i = 0; i < $('.answer-box .answer-text').length; i++) {
+            $('.answer-box .answer-text').eq(i).css(
+                'top',
+                (($('.answer-box').height() - 6 - $('.answer-box .answer-text').eq(i).height()) / 2) + 'px'
+            );
+        }
+        $('.answer-box .answer-option').find('span').css('line-height', ($('.answer-box .answer-option').eq(0).height() - 2) + 'px');
+
+
+        // 选择题是否选择答案flag
+        var selectedAnswer = '';
+        // 选择题选项点击逻辑
+        $('#choose').on('click', '.answer-box', function(event) {
+            if (!chooseLock) {
+                var box = $(event.currentTarget);
+                // 如果未选择任何选项
+                if (!selectedAnswer) {
+                    box.addClass('answer-box-selected');
+                    box.find('.answer-text').addClass('answer-text-selected');
+                    box.find('.answer-option').addClass('answer-option-selected');
+                    selectedAnswer = box.attr('data-option');
+                } else {
+                    // 如果是取消选择
+                    if (box.hasClass('answer-box-selected')) {
+                        box.removeClass('answer-box-selected');
+                        box.find('.answer-text').removeClass('answer-text-selected');
+                        box.find('.answer-option').removeClass('answer-option-selected');
+                        selectedAnswer = '';
+                    } else {
+                        // 如果选择的是别的选项 先把被选中的去除
+                        for (var i = 0; i < $('.answer-box').length; i++) {
+                            var _box = $('.answer-box').eq(i);
+                            if (_box.hasClass('answer-box-selected')) {
+                                _box.removeClass('answer-box-selected');
+                                _box.find('.answer-text').removeClass('answer-text-selected');
+                                _box.find('.answer-option').removeClass('answer-option-selected');
+                            }
+                        }
+                        box.addClass('answer-box-selected');
+                        box.find('.answer-text').addClass('answer-text-selected');
+                        box.find('.answer-option').addClass('answer-option-selected');
+                        selectedAnswer = box.attr('data-option');
+                    }
+                }
+            }
+        });
+
+
+        // 如果选择了答案
+        $('#choose .submit-answer').on('click', function(event) {
+            if (selectedAnswer && !chooseLock) {
+                chooseLock = true;
+                // 选择正确
+                if (selectedAnswer == answer) {
+                    var index = 0;
+                    if (selectedAnswer == 'b') {
+                        index = 1;
+                    } else if (selectedAnswer == 'c') {
+                        index = 2;
+                    }
+                    $('.answer-box').eq(index).addClass('answer-box-selected-right');
+                    $('#choose .submit-answer p').css('color', '#70ee38').text('回答正确');
+                } else {
+                    for (var i = 0; i < $('.answer-box .answer-text').length; i++) {
+                        // 错误答案标红
+                        if ($('.answer-box').eq(i).hasClass('answer-box-selected')) {
+                            $('.answer-box').eq(i).addClass('answer-box-selected-error');
+                        }
+                        // 正确答案标绿
+                        if ($('.answer-box').eq(i).attr('data-option') == answer) {
+                            $('.answer-box').eq(i).addClass('answer-box-selected-right');
+                            $('.answer-box').eq(i).find('.answer-option').addClass('answer-option-selected');
+                        }
+                    }
+                    $('#choose .submit-answer p').css('color', '#ff0000').text('回答错误');
+                }
+
+                $.post('questions', {
+                    sample: 'payload'
+                }, function(response) {
+                    if (response.status == 200) {
+                        setTimeout(loadNextQues(response.data), 3000);
+                    }
+                });
+            }
+        });
+    }
+
+    // initFillChoose('测试问题测试问题测试问题', {
+    //     "a": "政治文明",
+    //     "b": "生态文明",
+    //     "c": "精神文明"
+    // }, 'b')
+
+
+    initFillBlank('为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了___鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是', mock().options, mock().answer, '7.png')
+
+    // 初始化填空题
+    function initFillBlank(ques, options, answer, image) {
 
         // 未点击确认前为false
         // 点击确认之后就锁住
@@ -106,6 +179,9 @@ $(function() {
         // 先显示页面
         $('#fillblank').addClass('animated bounceIn');
         $('#fillblank').css('display', 'block');
+
+        // 文字居中
+        $('#fillblank .submit-answer').css('line-height', $('#fillblank .submit-answer').height() - 8 + 'px');
 
         if (!ques || options < 3 || options > 8) {
             return;
@@ -121,8 +197,11 @@ $(function() {
             // 题目文字
             answerFrame += '<div class="text-frame" style="height: ' + screen.height * 0.034 + 'px"></div>';
         }
-        $('#fillblank .ques-text').prepend(answerFrame + ques);
-
+        $('#fillblank .ques-text').css('max-height', screen.height * 0.4 + 'px').prepend('<div>' + ques.replace(/___/, answerFrame) + '</div>');
+        // 如果带图需要添加图片
+        if (image) {
+            $('#fillblank .ques-text').prepend('<img class="ques-image" src="../../../Public/images/' + image + '">');
+        }
         // 供选择的字
         for (var i = 0; i < options.length; i++) {
             // 供选择的字
@@ -154,9 +233,12 @@ $(function() {
                         text.attr('data-index', '').removeClass('choose-text-selected');
                     }
                 } else { // 选中的操作
-                    $('#fillblank .text-frame').eq(selectedText.length).text(text.text()).addClass('text-frame-filled');
-                    text.attr('data-index', selectedText.length).addClass('choose-text-selected');
-                    selectedText.push(text.text());
+                    // 在未选满字的情况下才能点击
+                    if (selectedText.length < answer.length) {
+                        $('#fillblank .text-frame').eq(selectedText.length).text(text.text()).addClass('text-frame-filled');
+                        text.attr('data-index', selectedText.length).addClass('choose-text-selected');
+                        selectedText.push(text.text());
+                    }
                 }
             }
         });
@@ -216,6 +298,8 @@ $(function() {
             }
         });
 
+        $('#fillblank').addClass('animated bounceIn');
+        $('#fillblank').css('display', 'block');
     }
 
 });

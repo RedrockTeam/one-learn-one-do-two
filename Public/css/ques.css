@@ -37,7 +37,7 @@ p {
     font-weight: bolder;
     font-size: 16px;
     text-align: center;
-    letter-spacing: 4px;
+    letter-spacing: 2px;
 }
 
 .ques-wrapper {
@@ -66,11 +66,20 @@ p {
 }
 
 .ques-text {
-    background-color: #fff;
     color: #2a51a3;
+    overflow: auto;
     font-size: 12px;
     padding: 7.5% 5% 5%;
     letter-spacing: 1px;
+    background-color: #fff;
+}
+
+.ques-image {
+    display: block;
+    margin: 0 auto;
+    height: 40%;
+    width: 40%;
+    margin-bottom: 5%;
 }
 
 .answer-wrapper {
@@ -91,6 +100,31 @@ p {
 
 .answer-box-selected {
     background-color: #2553da;
+}
+
+.answer-box-selected-right {
+    background-color: #70ee38;
+    color: #1c3eba;
+}
+
+.answer-box-selected-error {
+    background-color: #ff0000;
+}
+
+.left-join {
+    width: 84%;
+    height: 8%;
+    margin-left: 6%;
+    background-size: cover;
+    background-image: url(../images/left-join.png);
+}
+
+.right-join {
+    width: 84%;
+    height: 8%;
+    margin-left: 6%;
+    background-size: cover;
+    background-image: url(../images/right-join.png);
 }
 
 .answer-box .answer-option {
@@ -125,15 +159,16 @@ p {
 }
 
 .submit-answer {
+    margin-top: 5%;
     width: 53.2%;
-    height: 9.4%;
+    height: 9%;
     color: #1c3cb7;
     margin: 0 auto;
     font-size: 16px;
     text-align: center;
     font-weight: bolder;
     letter-spacing: 2px;
-    background-size: cover;
+    background-size: 100% 100%;
     background-image: url(../images/submit-answer-bg.png);
 }
 
@@ -148,7 +183,6 @@ p {
     text-align: center;
     display: inline-block;
     border: 2px solid #ffce00;
-
 }
 
 .text-frame-filled {
@@ -158,10 +192,12 @@ p {
 }
 
 .text-frame-filled-right {
+    border-color: #00b822;
     background-color: #00b615;
 }
 
 .text-frame-filled-error {
+    border-color: #f80000;
     background-color: #ff001d;
 }
 
@@ -170,7 +206,7 @@ p {
     font-weight: bolder;
     font-size: 14px;
     letter-spacing: 2px;
-    margin-bottom: 6%;
+    margin-bottom: 3%;
     padding-left: 5%;
     visibility: hidden;
 }
@@ -192,7 +228,7 @@ p {
     margin-right: 5%;
 }
 
-.choose-text:nth-child(4), .choose-text:nth-child(7) {
+.choose-text:nth-child(4), .choose-text:nth-child(8) {
     margin-right: 0;
 }
 
