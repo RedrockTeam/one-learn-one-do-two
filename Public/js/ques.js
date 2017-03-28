@@ -188,8 +188,6 @@ $(function() {
                 // 请求下一题
                 $.get('question', function(response) {
                     if (response.status == 200) {
-                        total = response.data.total;
-                        current = response.data.current;
                         if (total == current) {
                             alert('今天已经学满5组, 请明天再来');
                             location.href = 'rank';
@@ -207,8 +205,8 @@ $(function() {
                                 loadNextQues(response.data.question);
                             }, 3000);
                         }
-                    } else {
-
+                    } else if (response.status == 403) {
+                        location.href = 'Result';
                     }
                 });
             }
@@ -378,6 +376,8 @@ $(function() {
                             $('#fillblank .submit-answer p').css('color', '#1c3eba').text('确认');
                             loadNextQues(response.data.question);
                         }, 3000);
+                    } else if (response.status == 403) {
+                        location.href = 'Result';
                     }
                 });
             }
