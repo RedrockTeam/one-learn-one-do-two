@@ -16,9 +16,10 @@ $(function() {
     // 首次进入页面请求问题
     $.get('question', function(response) {
         if (response.status == 200) {
-            total = response.data.total;
-            current = response.data.current;
             loadNextQues(response.data.question);
+        } else if (response.status == 403) {
+            alert(response.error);
+            location.href = 'index';
         }
     });
 

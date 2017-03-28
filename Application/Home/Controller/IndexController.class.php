@@ -20,6 +20,10 @@ class IndexController extends BaseController {
         $this->display();
     }
 
+    public function result() {
+        $this->display();
+    }
+
     public function question() {
         $openid = session('openid');
         $users = M('users');
