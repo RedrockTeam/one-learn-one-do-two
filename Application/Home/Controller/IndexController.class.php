@@ -112,9 +112,9 @@ class IndexController extends BaseController {
     private function choose(&$currentData) {
         if ($currentData->choose) {
             $map['id'] = array('NOT IN', $currentData->choose);
-            $question = M('chooses')->where($map)->order('[RAND]')->find();
+            $question = M('chooses')->where($map)->order('rand()')->find();
         } else {
-            $question = M('chooses')->order('[RAND]')->find();
+            $question = M('chooses')->order('rand()')->find();
         }
         array_push($currentData->choose, $question['id']);
         $data = array(
@@ -139,16 +139,16 @@ class IndexController extends BaseController {
         }
         if ($currentData->fillblank) {
             $map['id'] = array('NOT IN', $currentData->fillblank);
-            $question = M('fillblank')->where($map)->order('[RAND]')->find();
+            $question = M('fillblank')->where($map)->order('rand()')->find();
         } else {
-            $question = M('fillblank')->order('[RAND]')->find();
+            $question = M('fillblank')->order('rand()')->find();
         }
         array_push($currentData->fillblank, $question['id']);
         $options = preg_split('/(?<!^)(?!$)/u', $question['answer']);
         $num = 8 - count($options);
         if ($num != 0) {
             $cmap['chracter'] =  array('NOT IN', $options);
-            $add = M('chracters')->where($cmap)->order('[RAND]')->limit($num)->field('chracter')->select();
+            $add = M('chracters')->where($cmap)->order('rand()')->limit($num)->field('chracter')->select();
             foreach ($add as $v) {
                 $options = array_merge($options, array($v['chracter']));
             }
