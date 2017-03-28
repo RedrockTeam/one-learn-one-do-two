@@ -7,9 +7,6 @@ class IndexController extends BaseController {
     private $chooseCount = 3;
     private $appid = 'wx81a4a4b77ec98ff4';
     private $acess_token = 'gh_68f0a1ffc303';
-    public function test() {
-        echo __APP__;
-    }
     public function index() {
         $this->display();
     }
