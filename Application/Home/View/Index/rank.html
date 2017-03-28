@@ -1,10 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>榜单页面</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+        <script src="http://apps.bdimg.com/libs/zepto/1.1.4/zepto.js"></script>
+        <script src="__PUBLIC__/js/rank.js"></script>
+        <title>榜单页面</title>
+        <style>
 
-</body>
+            html {
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                height: 84%;
+                padding-left: 12.9%;
+                background-size: 100% 100%;
+                -webkit-tap-highlight-color:rgba(0,0,0,0);
+                background-image: url(__PUBLIC__/images/ques-bg.png);
+            }
+
+            .rank-wrapper {
+                height: 80%;
+                width: 88.1%;
+                background-size: 100% 100%;
+                background-image: url(__PUBLIC__/images/rank-bg.png);
+                margin-top: 16%;
+            }
+
+            .content {
+                width: 82%;
+                height: 76%;
+                padding-top: 32%;
+                margin-left: 6.9%;
+            }
+
+            .my-rank-info {
+                color: #9f9f9f;
+                font-size: 14px;
+            }
+
+            .my-name, .my-ranking {
+                color: #3c6acb;
+                letter-spacing: 2px;
+            }
+
+
+            .rank-list {
+                margin-top: 3%;
+                height: 89%;
+                overflow: auto;
+            }
+
+            .rank-column {
+                overflow: hidden;
+                padding: 5%;
+                color: #1c3eba;
+                font-size: 14px;
+            }
+
+            .rank-column:first-child {
+                color: #6f6f6f;
+            }
+
+            .rank-column:nth-child(even){
+                background-color: #edf4fd;
+            }
+
+            .ranking {
+                font-weight: bolder;
+                float: left;
+                margin-left: 5%;
+            }
+
+            .nickname {
+                float: right;
+            }
+
+            .return-index {
+                margin-top: 5%;
+                width: 40%;
+                height: 9%;
+
+                margin: 10% 21%;
+                font-size: 16px;
+                text-align: center;
+                font-weight: bolder;
+                letter-spacing: 2px;
+                background-size: 100% 100%;
+                background-image: url(__PUBLIC__/images/submit-answer-bg.png);
+            }
+
+            .return-index a {
+                color: #1c3cb7;
+                text-decoration: none;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <div class="rank-wrapper">
+            <div class="content">
+                <div class="my-rank-info">
+                    <span class="my-name">我有很深的</span>&nbsp;排名第
+                    <span class="my-ranking">&nbsp;89&nbsp;</span>名
+                </div>
+                <div class="rank-list">
+                    <div class="rank-column">
+                        <div class="ranking">名次</div>
+                        <div class="nickname">昵称</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="return-index">
+            <a href="__MODULE__/Index/index">返回</a>
+        </div>
+    </body>
 </html>
