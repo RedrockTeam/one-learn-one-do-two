@@ -11,10 +11,11 @@ $(function() {
     });
 
     var total, current;
-
+    var totalScore = 0;
 
     // 首次进入页面请求问题
     $.get('question', function(response) {
+        addCookie('current', response.data.current);
         if (response.status == 200) {
             loadNextQues(response.data.question);
         } else if (response.status == 403) {
@@ -24,58 +25,45 @@ $(function() {
     });
 
 
-    function mockFillblank() {
-        var question = 'sdfdsfd___火山口上打开数据库的技术难点是考了多少快捷酒店可能是市地税局的';
-        var str = '为了健康红烧鸡块你好但我活动活动';
-        var options = '';
-        var length = Math.floor(Math.random() * 8) + 1;
-        for (var i = 0; i < length; i++) {
-            options += str[i];
+    function addCookie(name, value, expiresHours) {
+        var cookieString = name + "=" + escape(value);
+        //判断是否设置过期时间,0代表关闭浏览器时失效
+        if (expiresHours > 0) {
+            var date = new Date();
+            date.setTime(date.getTime + expiresHours * 3600 * 1000);
+            cookieString = cookieString + "; expires=" + date.toGMTString();
         }
-        var answer = '';
-        for (var i = 0; i < options.length; i++) {
-            if (i % 2 == 0) {
-                answer += options[i];
-            }
-        }
-        return {
-            type: 'fillblank',
-            question: question,
-            answer: answer,
-            options: options
-        };
+        document.cookie = cookieString;
     }
 
-    function mockChoose() {
-        var question = 'sdfdsfd___火山口上打开数据库的技术难点是考了多少快捷酒店可能是市地税局的';
-        var str = '为了健康红烧鸡块你好但我活动活动';
-        var option1 = '';
-        var option2 = '';
-        var option3 = ''
-        var length = Math.floor(Math.random() * 8) + 1;
-        for (var i = 0; i < length; i++) {
-            option1 += str[i];
+    function setCookie(name, value, expiresHours) {
+        var cookieString = name + "=" + escape(value);
+        //判断是否设置过期时间,0代表关闭浏览器时失效
+        if (expiresHours > 0) {
+            var date = new Date();
+            date.setTime(date.getTime + expiresHours * 3600 * 1000); //单位是多少小时后失效
+            cookieString = cookieString + "; expires=" + date.toGMTString();
         }
-        for (var j = 0; j < length; j++) {
-            option2 += str[j];
-        }
-        for (var k = 0; k < length; k++) {
-            option3 += str[k];
-        }
+        document.cookie = cookieString;
+    }
 
-        var options = {
-            a: option1,
-            b: option2,
-            c: option3
-        };
+    function getCookie(name) {
+        if (document.cookie.length > 0) {
+            c_start = document.cookie.indexOf(name + "=")
+            if (c_start != -1) {
+                c_start = c_start + name.length + 1
+                c_end = document.cookie.indexOf(";", c_start)
+                if (c_end == -1) c_end = document.cookie.length
+                return unescape(document.cookie.substring(c_start, c_end))
+            }
+        }
+        return ""
+    }
 
-        var answer = 'a';
-        return {
-            type: 'choose',
-            question: question,
-            answer: answer,
-            options: options
-        };
+    function deleteCookie(name) {
+        var date = new Date();
+        date.setTime(date.getTime() - 10000); //设定一个过去的时间即可
+        document.cookie = name + "=v; expires=" + date.toGMTString();
     }
 
     // 加载下一题
@@ -156,6 +144,8 @@ $(function() {
                 chooseLock = true;
                 // 选择正确
                 if (selectedAnswer == answer) {
+                    // 总分加20
+                    totalScore = totalScore + 20;
                     var index = 0;
                     if (selectedAnswer == 'b') {
                         index = 1;
@@ -178,20 +168,15 @@ $(function() {
                     }
                     $('#choose .submit-answer p').css('color', '#ff0000').text('回答错误');
                 }
-
-                if (Math.random() >= 0.5) {
-                    var data = mockChoose();
+                console.log(getCookie('current'));
+                // 如果本道题已经是本组最后一道，就跳转到Rank页面
+                if (getCookie('current') == 5) {
+                    location.href = 'Result/rightCount/' + totalScore / 20;
                 } else {
-                    var data = mockFillblank();
-                }
-
-                // 请求下一题
-                $.get('question', function(response) {
-                    if (response.status == 200) {
-                        if (total == current) {
-                            alert('今天已经学满5组, 请明天再来');
-                            location.href = 'rank';
-                        } else {
+                    // 请求下一题
+                    $.get('question', function(response) {
+                        if (response.status == 200) {
+                            setCookie('current', response.data.current);
                             setTimeout(function() {
                                 // 题目文字清空
                                 $('#choose .ques-text').text('');
@@ -204,11 +189,11 @@ $(function() {
                                 chooseLock = false;
                                 loadNextQues(response.data.question);
                             }, 3000);
+                        } else if (response.status == 403) {
+                            location.href = 'Rank';
                         }
-                    } else if (response.status == 403) {
-                        location.href = 'Result';
-                    }
-                });
+                    });
+                }
             }
         });
 
@@ -316,6 +301,8 @@ $(function() {
 
                 // 答案正确
                 if (choosedText == answer) {
+                    // 总分加20
+                    totalScore = totalScore + 20;
                     $('#fillblank .text-frame').addClass('text-frame-filled-right');
                     for (var i = 0; i < $('.choose-text').length; i++) {
                         if ($('.choose-text').eq(i).hasClass('choose-text-selected')) {
@@ -355,31 +342,34 @@ $(function() {
                     $('.right-answer').css('visibility', 'visible');
                     $('#fillblank .submit-answer p').css('color', '#ff001d').text('回答错误');
                 }
-
-                // 请求下一题
-                $.get('question', function(response) {
-                    if (response.status == 200) {
-                        total = response.data.total;
-                        current = response.data.current;
-                        setTimeout(function() {
-                            // 清空操作
-                            answerText = chooseText = answerFrame = '';
-                            // 题目文字清空
-                            $('#fillblank .ques-text').text('');
-                            // 正确答案隐藏并清空
-                            $('.right-answer').css('visibility', 'hidden').find('span').text('');
-                            // 供选择的字清空
-                            $('.choose-text-wrapper').text('');
-                            // 已选择的字清空
-                            selectedText = [];
-                            // 确认按钮变回原样
-                            $('#fillblank .submit-answer p').css('color', '#1c3eba').text('确认');
-                            loadNextQues(response.data.question);
-                        }, 3000);
-                    } else if (response.status == 403) {
-                        location.href = 'Result';
-                    }
-                });
+                console.log(getCookie('current'));
+                if (getCookie('current') == 5) {
+                    location.href = 'Result/rightCount/' + totalScore / 20;
+                } else {
+                    // 请求下一题
+                    $.get('question', function(response) {
+                        if (response.status == 200) {
+                            setCookie('current', response.data.current);
+                            setTimeout(function() {
+                                // 清空操作
+                                answerText = chooseText = answerFrame = '';
+                                // 题目文字清空
+                                $('#fillblank .ques-text').text('');
+                                // 正确答案隐藏并清空
+                                $('.right-answer').css('visibility', 'hidden').find('span').text('');
+                                // 供选择的字清空
+                                $('.choose-text-wrapper').text('');
+                                // 已选择的字清空
+                                selectedText = [];
+                                // 确认按钮变回原样
+                                $('#fillblank .submit-answer p').css('color', '#1c3eba').text('确认');
+                                loadNextQues(response.data.question);
+                            }, 3000);
+                        } else if (response.status == 403) {
+                            location.href = 'Rank';
+                        }
+                    });
+                }
             }
         });
 

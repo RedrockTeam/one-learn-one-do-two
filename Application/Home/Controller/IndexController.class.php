@@ -21,6 +21,7 @@ class IndexController extends BaseController {
     }
 
     public function result() {
+        $this->assign('rightCount', I('get.rightCount'));
         $this->display();
     }
 
