@@ -1,6 +1,6 @@
 <?php
 namespace Home\Controller;
-use Org\Util\String;
+// use Org\Util\String;
 use Think\Controller;
 
 class IndexController extends BaseController {
@@ -9,19 +9,23 @@ class IndexController extends BaseController {
     private $appid = 'wx81a4a4b77ec98ff4';
     private $acess_token = 'gh_68f0a1ffc303';
     public function index() {
-     echo __APP__.'/Public/images/';
+        //todo jssdk
+        // echo '';
+        $this->display();
     }
 
-    public function questions() {
+    public function question() {
         $openid = session('openid');
         $users = M('users');
         $user = $users->where(array('openid' => $openid))->find();
+
+        //todo 学习限制
 
         //访问时检查是否为第二天, 重置状态
         if ($user['date'] != date('Y-m-d', time())) {
             $user['date'] = date('Y-m-d', time());
             $user['time'] = time();
-            $user['current'] = 1;
+            $user['current'] = 0;
             $user['today_learn_groups'] = 0;
             $user['today_learn_id'] = json_encode(array('choose'=>array(), 'fillblank'=>array()));
         }
@@ -35,50 +39,29 @@ class IndexController extends BaseController {
         }
 
         $currentLearn = json_decode($user['today_learn_id']);
-        for ($i = $user['current']-1; $i < $this->total; $i++) {
-            if ($i < $this->chooseCount) {
-                $data['questions'][] = $this->fillblank($currentLearn, $i);
-            } elseif ($i >= $this->chooseCount && $i < $this->total){
-                $data['questions'][] = $this->choose($currentLearn);
-            } else {
-                $this->ajaxReturn(array(
-                    'status' => 500,
-                    'error' => '当前题目未知'
-                ));
-            }
+        if ($user['current'] < $this->chooseCount) {
+            $data['question'] = $this->fillblank($currentLearn, $user['current']);
+        } elseif ($user['current'] >= $this->chooseCount && $user['current'] < $this->total){
+            $data['question'] = $this->choose($currentLearn);
+        } else {
+            $this->ajaxReturn(array(
+                'status' => 500,
+                'error' => '当前题目未知'
+            ));
         }
         $user['today_learn_id'] = json_encode($currentLearn);
-
+        $user['current'] += 1;
+        $data['current'] = $user['current'];
+        if ($user['current'] == $this->total) {
+            $user['current'] = 0;
+            $user['count'] += 1;
+            $user['today_learn_groups'] += 1;
+        }
         $data['total'] = $this->total;
-        $data['current'] = (int)$user['current'];
         $users->where(array('openid' => $openid))->save($user);
         $this->ajaxReturn(array(
             'status' => 200,
             'data'  => $data
-        ));
-    }
-
-    public function record() {
-        $current = I('post.current');
-        if (!is_numeric($current) || $current < 1 || $current > $this->total) {
-            $this->ajaxReturn(array(
-                'status' => 403,
-                'error'  => '非法数据'
-            ));
-        }
-        $openid = session('openid');
-        $users = M('users');
-        $user = $users->where(array('openid' => $openid))->find();
-        if ($current == $this->total) {
-            $user['current'] = 1;
-            $user['count'] += 1;
-            $user['today_learn_groups'] += 1;
-        } else {
-            $user['current'] = $current+1;
-        }
-        $users->where(array('openid' => $openid))->save($user);
-        $this->ajaxReturn(array(
-            'status' => 200,
         ));
     }
 
@@ -166,13 +149,13 @@ class IndexController extends BaseController {
             'answer' => $question['answer']
         );
         if ($question['type'] == 'sigequanmian') {
-            $data['image'] = __APP__.'/Public/images/'.rand(1, 23).'.png';
+            $data['image'] = rand(1, 23).'.png';
         }
         return $data;
     }
 
     public function JSSDKSignature(){
-        $string = new String();
+        // $string = new String();
         $jsapi_ticket =  $this->getTicket();
         $data['jsapi_ticket'] = $jsapi_ticket['data'];
         $data['noncestr'] = $string->randString();
