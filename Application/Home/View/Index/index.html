@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0;" name="viewport" />
+        <style>
+
+            html {
+                height: 100%;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+                background-image: url(__PUBLIC__/images/index-bg.png);
+            }
+            .start {
+                width: 40.3%;
+                height: 6.5%;
+                position: absolute;
+                top: 66%;
+                left: 28.3%;
+            }
+            .rank {
+                width: 40.3%;
+                height: 6.5%;
+                position: absolute;
+                top: 76.5%;
+                left: 28.3%;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="start"></div>
+        <div class="rank"></div>
+    </body>
+    <script>
+
+        window.onload = function () {
+            // 答题页面
+            document.querySelector('.start').addEventListener('click', function () {
+                location.href = 'ques';
+            });
+            // 榜单页面
+            document.querySelector('.rank').addEventListener('click', function () {
+                location.href = 'rank';
+            });
+        };
+
+    </script>
+</html>

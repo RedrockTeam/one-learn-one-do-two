@@ -1,0 +1,246 @@
+
+html {
+    height: 100%;
+}
+
+body {
+    width: 100%;
+    height: 92.5%;
+    margin: 0;
+    padding: 0;
+    padding-top: 7.5%;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-image: url(../images/ques-bg.png);
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+}
+
+/* height: 972  width: 545*/
+#choose, #fillblank, #fillblank-pro {
+    width: 75.5%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.ques-type-title {
+    color: #fff;
+    font-weight: bolder;
+    font-size: 16px;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.ques-wrapper {
+    width: 96%;
+    background-color: #ffce00;
+    border-radius: 5px;
+    margin-top: 7%;
+    margin-bottom: 5%;
+    padding: 2%;
+}
+
+.teen-voice-decorate {
+    position: absolute;
+    width: 28%;
+    height: 3%;
+    left: -1.5%;
+    top: 6.1%;
+}
+
+.cross-decorate {
+    position: absolute;
+    width: 9%;
+    height: 6%;
+    left: 93.1%;
+    top: 3.5%;
+}
+
+.ques-text {
+    color: #2a51a3;
+    overflow: auto;
+    font-size: 12px;
+    padding: 7.5% 5% 5%;
+    letter-spacing: 1px;
+    background-color: #fff;
+}
+
+.ques-image {
+    display: block;
+    margin: 0 auto;
+    height: 40%;
+    width: 40%;
+    margin-bottom: 5%;
+}
+
+.answer-wrapper {
+    width: 100%;
+    height: 38%;
+    margin-bottom: 18.5%;
+}
+
+.answer-box {
+    width: 88%;
+    padding-left: 3.12%;
+    padding-right: 5%;
+    background-color: #fff;
+    border-radius: 50px;
+    border: 2px solid #1c3eba;
+}
+
+.answer-box-selected {
+    background-color: #2553da;
+}
+
+.answer-box-selected-right {
+    background-color: #70ee38;
+    color: #1c3eba;
+}
+
+.answer-box-selected-error {
+    background-color: #ff0000;
+}
+
+.left-join {
+    width: 84%;
+    height: 8%;
+    margin-left: 6%;
+    background-size: cover;
+    background-image: url(../images/left-join.png);
+}
+
+.right-join {
+    width: 84%;
+    height: 8%;
+    margin-left: 6%;
+    background-size: cover;
+    background-image: url(../images/right-join.png);
+}
+
+.answer-box .answer-option {
+    float: left;
+    width: 12.8%;
+    height: 70.1%;
+    margin-right: 4%;
+    margin-top: 2%;
+    text-align: center;
+    border-radius: 50%;
+    border: 2px solid #1c3eba;
+}
+
+.answer-option-selected {
+    background-color: #fff;
+}
+
+.answer-box .answer-option span {
+    color: #1c3eba;
+    font-size: 18px;
+}
+
+.answer-box .answer-text {
+    color: #2a51a3;
+    font-size: 12px;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.answer-text-selected {
+    color: #fff !important;
+}
+
+.submit-answer {
+    margin-top: 5%;
+    width: 53.2%;
+    height: 9%;
+    color: #1c3cb7;
+    margin: 0 auto;
+    font-size: 16px;
+    text-align: center;
+    font-weight: bolder;
+    letter-spacing: 2px;
+    background-size: 100% 100%;
+    background-image: url(../images/submit-answer-bg.png);
+}
+
+/* 普通填字题 */
+.text-frame {
+    padding: 2%;
+    width: 8.4%;
+    color: #1c3eba;
+    margin-top: 3px;
+    margin-right: 4%;
+    border-radius: 5px;
+    text-align: center;
+    display: inline-block;
+    border: 2px solid #ffce00;
+}
+
+.text-frame-filled {
+    top: -7px;
+    position: relative;
+    background-color: #ffce00;
+}
+
+.text-frame-filled-right {
+    border-color: #00b822;
+    background-color: #00b615;
+}
+
+.text-frame-filled-error {
+    border-color: #f80000;
+    background-color: #ff001d;
+}
+
+.right-answer {
+    color: #1c3eba;
+    font-weight: bolder;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 3%;
+    padding-left: 5%;
+    visibility: hidden;
+}
+
+.choose-text-wrapper {
+    padding: 0 5%;
+    overflow: hidden;
+}
+
+.choose-text {
+    width: 18.75%;
+    text-align: center;
+    float: left;
+    border: 2px solid #1c3eba;
+    background-color: #fff;
+    color: #1c3eba;
+    border-radius: 6px;
+    margin-bottom: 6%;
+    margin-right: 5%;
+}
+
+.choose-text:nth-child(4), .choose-text:nth-child(8) {
+    margin-right: 0;
+}
+
+.choose-text-selected {
+    background-color: #1c3eba;
+    color: #fff;
+}
+
+.choose-text-selected-right {
+    background-color: #00b615;
+}
+
+.choose-text-selected-error {
+    background-color: #ff001d;
+}
+

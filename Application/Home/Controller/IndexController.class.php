@@ -9,8 +9,14 @@ class IndexController extends BaseController {
     private $appid = 'wx81a4a4b77ec98ff4';
     private $acess_token = 'gh_68f0a1ffc303';
     public function index() {
-        //todo jssdk
-        // echo '';
+        $this->display();
+    }
+
+    public function ques() {
+        $this->display();
+    }
+
+    public function rank() {
         $this->display();
     }
 
@@ -65,7 +71,7 @@ class IndexController extends BaseController {
         ));
     }
 
-    public function rank() {
+    public function getRank() {
         $users = M('users');
         $openid = session('openid');
         $user = $users->where(array('openid' => $openid))->find();
