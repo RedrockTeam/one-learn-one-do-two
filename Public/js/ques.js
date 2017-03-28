@@ -10,17 +10,21 @@ $(function() {
         height: $(window).height() * 0.759
     });
 
+    var total, current;
 
 
-    //
-    $.get('question', function(response) {
+    // 首次进入页面请求问题
+    $.get('questions', function(response) {
         if (response.status == 200) {
-            loadNextQues(response.data.question);
+            total = response.data.total;
+            current = response.data.current;
+            loadNextQues(mockFillblank());
         }
     });
 
 
-    function mock() {
+    function mockFillblank() {
+        var question = 'sdfdsfd___火山口上打开数据库的技术难点是考了多少快捷酒店可能是市地税局的';
         var str = '为了健康红烧鸡块你好但我活动活动';
         var options = '';
         var length = Math.floor(Math.random() * 8) + 1;
@@ -34,6 +38,40 @@ $(function() {
             }
         }
         return {
+            type: 'fillblank',
+            question: question,
+            answer: answer,
+            options: options
+        };
+    }
+
+    function mockChoose() {
+        var question = 'sdfdsfd___火山口上打开数据库的技术难点是考了多少快捷酒店可能是市地税局的';
+        var str = '为了健康红烧鸡块你好但我活动活动';
+        var option1 = '';
+        var option2 = '';
+        var option3 = ''
+        var length = Math.floor(Math.random() * 8) + 1;
+        for (var i = 0; i < length; i++) {
+            option1 += str[i];
+        }
+        for (var j = 0; j < length; j++) {
+            option2 += str[j];
+        }
+        for (var k = 0; k < length; k++) {
+            option3 += str[k];
+        }
+
+        var options = {
+            a: option1,
+            b: option2,
+            c: option3
+        };
+
+        var answer = 'a';
+        return {
+            type: 'choose',
+            question: question,
             answer: answer,
             options: options
         };
@@ -44,7 +82,7 @@ $(function() {
         if (quesInfo.type == 'choose') {
             initFillChoose(quesInfo.question, quesInfo.options, quesInfo.answer);
         } else {
-            initFillBlank(quesInfo.question, quesInfo.options, quesInfo.answer, '7.png');
+            initFillBlank(quesInfo.question, quesInfo.options, quesInfo.answer, quesInfo.image);
         }
     }
 
@@ -70,15 +108,6 @@ $(function() {
             }
         }
         $('#choose .answer-wrapper').append(optionTpl);
-
-        // 设置选项文字上下居中
-        for (var i = 0; i < $('.answer-box .answer-text').length; i++) {
-            $('.answer-box .answer-text').eq(i).css(
-                'top',
-                (($('.answer-box').height() - 6 - $('.answer-box .answer-text').eq(i).height()) / 2) + 'px'
-            );
-        }
-        $('.answer-box .answer-option').find('span').css('line-height', ($('.answer-box .answer-option').eq(0).height() - 2) + 'px');
 
 
         // 选择题是否选择答案flag
@@ -121,7 +150,7 @@ $(function() {
 
 
         // 如果选择了答案
-        $('#choose .submit-answer').on('click', function(event) {
+        $('#choose').on('click', '.submit-answer', function(event) {
             if (selectedAnswer && !chooseLock) {
                 chooseLock = true;
                 // 选择正确
@@ -149,43 +178,80 @@ $(function() {
                     $('#choose .submit-answer p').css('color', '#ff0000').text('回答错误');
                 }
 
-                $.post('questions', {
-                    sample: 'payload'
-                }, function(response) {
+                if (Math.random() >= 0.5) {
+                    var data = mockChoose();
+                } else {
+                    var data = mockFillblank();
+                }
+
+                // 请求下一题
+                $.get('questions', function(response) {
                     if (response.status == 200) {
-                        setTimeout(loadNextQues(response.data), 3000);
+                        setTimeout(function() {
+                            // 题目文字清空
+                            $('#choose .ques-text').text('');
+                            // 题目选项清空
+                            $('#choose .answer-wrapper').text('');
+                            // 确认按钮变回原样
+                            $('.submit-answer p').css('color', '#1c3eba').text('确认');
+                            // 选择答案清空
+                            selectedAnswer = '';
+                            chooseLock = false;
+                            loadNextQues(data);
+                        }, 3000);
+                    } else {
+
                     }
                 });
             }
         });
+
+        if ($('#choose').css('display') == 'none') {
+            // 隐藏填字题页面
+            $('#fillblank').removeClass('bounceIn');
+            $('#fillblank').css('display', 'none');
+            // 显示选择题页面
+            $('#choose').addClass('animated bounceIn');
+            $('#choose').css('display', 'block');
+        }
+
+        // 样式调整
+        $('.answer-box').css('height', screen.height * 0.077);
+        $('.answer-box .answer-option').css('height', screen.height * 0.055);
+
+        // 设置选项文字上下居中
+        for (var i = 0; i < $('.answer-box .answer-text').length; i++) {
+            $('.answer-box .answer-text').eq(i).css(
+                'top',
+                ((screen.height * 0.046) / 2) + 'px'
+            );
+        }
+        $('.answer-box .answer-option').find('span').css('line-height', (screen.height * 0.055 - 2) + 'px');
+
+        $('#choose .submit-answer').css('height', screen.height * 0.09);
+
+        $('#choose .submit-answer').css('line-height', screen.height * 0.09 - 8 + 'px');
+
     }
-
-    // initFillChoose('测试问题测试问题测试问题', {
-    //     "a": "政治文明",
-    //     "b": "生态文明",
-    //     "c": "精神文明"
-    // }, 'b')
-
-
-    initFillBlank('为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了___鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是为了健康红烧鸡块你好但是', mock().options, mock().answer, '7.png')
 
     // 初始化填空题
     function initFillBlank(ques, options, answer, image) {
 
+        answerText = chooseText = answerFrame = '';
+        // 题目文字清空
+        $('#fillblank .ques-text').text('');
+        // 正确答案隐藏并清空
+        $('.right-answer').css('visibility', 'hidden').find('span').text('');
+        // 供选择的字清空
+        $('.choose-text-wrapper').text('');
+        // 已选择的字清空
+        selectedText = [];
+        // 确认按钮变回原样
+        $('#fillblank .submit-answer p').css('color', '#1c3eba').text('确认');
+
         // 未点击确认前为false
         // 点击确认之后就锁住
         var lock = false;
-
-        // 先显示页面
-        $('#fillblank').addClass('animated bounceIn');
-        $('#fillblank').css('display', 'block');
-
-        // 文字居中
-        $('#fillblank .submit-answer').css('line-height', $('#fillblank .submit-answer').height() - 8 + 'px');
-
-        if (!ques || options < 3 || options > 8) {
-            return;
-        }
 
         // 题目文字
         var answerText = '',
@@ -197,7 +263,7 @@ $(function() {
             // 题目文字
             answerFrame += '<div class="text-frame" style="height: ' + screen.height * 0.034 + 'px"></div>';
         }
-        $('#fillblank .ques-text').css('max-height', screen.height * 0.4 + 'px').prepend('<div>' + ques.replace(/___/, answerFrame) + '</div>');
+        $('#fillblank .ques-text').css('height', screen.height * 0.4 + 'px').prepend('<div>' + ques.replace(/___/, answerFrame) + '</div>');
         // 如果带图需要添加图片
         if (image) {
             $('#fillblank .ques-text').prepend('<img class="ques-image" src="../../../Public/images/' + image + '">');
@@ -211,10 +277,10 @@ $(function() {
         // 供选择的字
         $('.choose-text-wrapper').prepend(chooseText);
 
-
-        // 正确答案
+        // 显示正确答案
         $('.right-answer span').text(answer);
 
+        $('#choose .submit-answer p').css('color', '#1c3eba').text('确认');
 
         // 已选择的字
         var selectedText = [];
@@ -293,13 +359,40 @@ $(function() {
                     }
                     // 显示正确答案
                     $('.right-answer').css('visibility', 'visible');
-                    $('.submit-answer p').css('color', '#ff001d').text('回答错误');
+                    $('#fillblank .submit-answer p').css('color', '#ff001d').text('回答错误');
+
+                    if (Math.random() >= 0.5) {
+                        var data = mockChoose();
+                    } else {
+                        var data = mockFillblank();
+                    }
+
                 }
+                // 请求下一题
+                $.get('questions', function(response) {
+                    if (response.status == 200) {
+                        setTimeout(function() {
+                            loadNextQues(data);
+                        }, 3000);
+                    }
+                });
             }
         });
 
-        $('#fillblank').addClass('animated bounceIn');
-        $('#fillblank').css('display', 'block');
+        if ($('#fillblank').css('display') == 'none') {
+            // 隐藏选择题页面
+            $('#choose').removeClass('bounceIn');
+            $('#choose').css('display', 'none');
+
+            // 显示填字题页面
+            $('#fillblank').addClass('animated bounceIn');
+            $('#fillblank').css('display', 'block');
+        }
+
+        $('#fillblank .submit-answer').css('height', screen.height * 0.09);
+
+        $('#fillblank .submit-answer').css('line-height', screen.height * 0.09 - 8 + 'px');
+
     }
 
 });

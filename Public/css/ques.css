@@ -53,16 +53,16 @@ p {
     position: absolute;
     width: 28%;
     height: 3%;
-    left: 11.14%;
-    top: 8.5%;
+    left: -1.5%;
+    top: 6.1%;
 }
 
 .cross-decorate {
     position: absolute;
     width: 9%;
     height: 6%;
-    left: 81.1%;
-    top: 7.5%;
+    left: 93.1%;
+    top: 3.5%;
 }
 
 .ques-text {
@@ -90,7 +90,6 @@ p {
 
 .answer-box {
     width: 88%;
-    height: 27.3%;
     padding-left: 3.12%;
     padding-right: 5%;
     background-color: #fff;
