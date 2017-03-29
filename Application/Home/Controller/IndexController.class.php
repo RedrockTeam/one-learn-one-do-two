@@ -83,9 +83,9 @@ class IndexController extends BaseController {
         $user = $users->where(array('openid' => $openid))->find();
         $map['count'] = array('EGT', $user['count']);
         $rank = $users->where($map)->count();
-        $list = $users->order('count desc')->field('nickname, imgurl as avatar')->limit(10)->select();
-        if ($rank <= 10) {
-            $real = $users->order('count desc')->field('nickname, imgurl')->limit(10)->select();
+        $list = $users->order('count desc')->field('nickname, imgurl as avatar')->limit(50)->select();
+        if ($rank <= 50) {
+            $real = $users->order('count desc')->field('nickname, imgurl')->limit(50)->select();
         }
         foreach ($real as $key => $value) {
             if ($value['nickname'] == $user['nickname']) {
@@ -169,9 +169,7 @@ class IndexController extends BaseController {
             'options' => $options,
             'answer' => $question['answer']
         );
-        if ($question['type'] == 'gushidiangu') {
-            $data['image'] = __APP__.'/Public/images/'.rand(1, 22).'.png';
-        }
+        $data['image'] = __APP__.'/Public/images/'.rand(1, 22).'.png';
         return $data;
     }
 
