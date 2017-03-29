@@ -161,7 +161,7 @@ class IndexController extends BaseController {
             'options' => $options,
             'answer' => $question['answer']
         );
-        if ($question['type'] == 'sigequanmian') {
+        if ($question['type'] == 'gushidiangu') {
             $data['image'] = rand(1, 22).'.png';
         }
         return $data;
