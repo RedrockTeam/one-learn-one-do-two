@@ -1,7 +1,6 @@
 <?php
 namespace Home\Controller;
-// use Org\Util\String;
-use Think\Controller;
+ use Org\Util\String;
 
 class IndexController extends BaseController {
     private $total = 5;
@@ -80,12 +79,11 @@ class IndexController extends BaseController {
         $users = M('users');
         $openid = session('openid');
         $user = $users->where(array('openid' => $openid))->find();
-        $map['count'] = array('GT', $user['count']);
+        $map['count'] = array('EGT', $user['count']);
         $rank = $users->where($map)->count();
-        $rank += 1;
         $list = $users->order('count desc')->field('nickname, imgurl as avatar')->limit(10)->select();
-        if ($rank <= 50) {
-            $real = $users->order('count desc')->field('nickname, imgurl')->limit(50)->select();
+        if ($rank <= 10) {
+            $real = $users->order('count desc')->field('nickname, imgurl')->limit(10)->select();
         }
         foreach ($real as $key => $value) {
             if ($value['nickname'] == $user['nickname']) {
@@ -94,6 +92,15 @@ class IndexController extends BaseController {
         }
         if ($user['count'] == 0) {
             $rank = '∞';
+        }
+        $num = 1;
+        foreach ($list as &$v) {
+            if ($num < 4) {
+                $v['rank'] = 'rank'.$num.'.png';
+            } else {
+                $v['rank'] = $num;
+            }
+            $num++;
         }
         $this->ajaxReturn(array(
             'status' => 200,
@@ -110,9 +117,9 @@ class IndexController extends BaseController {
     private function choose(&$currentData) {
         if ($currentData->choose) {
             $map['id'] = array('NOT IN', $currentData->choose);
-            $question = M('chooses')->where($map)->order('[RAND]')->find();
+            $question = M('chooses')->where($map)->order('rand()')->find();
         } else {
-            $question = M('chooses')->order('[RAND]')->find();
+            $question = M('chooses')->order('rand()')->find();
         }
         array_push($currentData->choose, $question['id']);
         $data = array(
@@ -137,16 +144,16 @@ class IndexController extends BaseController {
         }
         if ($currentData->fillblank) {
             $map['id'] = array('NOT IN', $currentData->fillblank);
-            $question = M('fillblank')->where($map)->order('[RAND]')->find();
+            $question = M('fillblank')->where($map)->order('rand()')->find();
         } else {
-            $question = M('fillblank')->order('[RAND]')->find();
+            $question = M('fillblank')->order('rand()')->find();
         }
         array_push($currentData->fillblank, $question['id']);
         $options = preg_split('/(?<!^)(?!$)/u', $question['answer']);
         $num = 8 - count($options);
         if ($num != 0) {
             $cmap['chracter'] =  array('NOT IN', $options);
-            $add = M('chracters')->where($cmap)->order('[RAND]')->limit($num)->field('chracter')->select();
+            $add = M('chracters')->where($cmap)->order('rand()')->limit($num)->field('chracter')->select();
             foreach ($add as $v) {
                 $options = array_merge($options, array($v['chracter']));
             }
@@ -160,13 +167,13 @@ class IndexController extends BaseController {
             'answer' => $question['answer']
         );
         if ($question['type'] == 'sigequanmian') {
-            $data['image'] = rand(1, 23).'.png';
+            $data['image'] = rand(1, 22).'.png';
         }
         return $data;
     }
 
     public function JSSDKSignature(){
-        // $string = new String();
+         $string = new String();
         $jsapi_ticket =  $this->getTicket();
         $data['jsapi_ticket'] = $jsapi_ticket['data'];
         $data['noncestr'] = $string->randString();
