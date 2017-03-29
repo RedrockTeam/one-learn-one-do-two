@@ -25,6 +25,11 @@
                 background-image: url(__PUBLIC__/images/index-bg.png);
             }
 
+            p {
+                margin: 0;
+                padding: 0;
+            }
+
             .start {
                 top: 66%;
                 left: 28.3%;
@@ -46,11 +51,68 @@
                 background-size: 100% 100%;
                 background-image: url(__PUBLIC__/images/view-rank-bg.png);
             }
+
+            .dimmer {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: #000300;
+                opacity: .5;
+                display: none;
+            }
+
+            .help {
+                top: 2.4%;
+                width: 7%;
+                right: 4%;
+                height: 4%;
+                position: absolute;
+            }
+
+            .developer-info {
+                width: 62%;
+                height: 38%;
+                display: none;
+                margin: 0 auto;
+                margin-top: 39%;
+                background-size: 100% 100%;
+                background-image: url(__PUBLIC__/images/developer-info-bg.png);
+            }
+            .developer-info .content {
+                padding-top: 21%;
+                text-align: center;
+                margin-left: -3%;
+            }
+
+            .developer-info .content p {
+                margin-bottom: 2%;
+                color: #1f44bd;
+                font-size: 14px;
+                letter-spacing: 2px;
+                font-weight: bolder;
+            }
+
         </style>
     </head>
     <body>
         <div class="start"></div>
         <div class="rank"></div>
+        <div class="dimmer"></div>
+        <img src="__PUBLIC__/images/help.png" alt="" class="help">
+
+        <div class="developer-info animated">
+            <div class="content">
+                <p>产品策划: 杨奇凡</p>
+                <p>视觉设计: 唐荟云</p>
+                <p>前端开发: 周政</p>
+                <p>后端开发: 隆宗益</p>
+                <p>指导老师: 杨奇凡</p>
+                <p>出品: 红岩网校工作站</p>
+            </div>
+        </div>
+
     </body>
     <script>
 
@@ -66,6 +128,14 @@
             // 榜单页面
             $('.rank').on('click', function () {
                 location.href = "{:U('Index/Rank')}";
+            });
+
+            $('.help').on('click', function () {
+                $('.developer-info').addClass('pulse').css('display', 'block');
+                $('.dimmer').css('display', 'block').on('click', function () {
+                    $('.dimmer').css('display', 'none');
+                    $('.developer-info').removeClass('pulse').css('display', 'none');
+                });
             });
         });
 

@@ -12,14 +12,17 @@ class IndexController extends BaseController {
     }
 
     public function ques() {
+        $this->assign('date', time());
         $this->display();
     }
 
     public function rank() {
+        $this->assign('date', time());
         $this->display();
     }
 
     public function result() {
+        $this->assign('date', time());
         $this->assign('rightCount', I('get.rightCount', 0));
         $this->display();
     }
