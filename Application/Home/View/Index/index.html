@@ -32,6 +32,8 @@
                 position: absolute;
                 top: 66%;
                 left: 28.3%;
+                background-color: red;
+                display: none;
             }
             .rank {
                 width: 40.3%;
@@ -39,11 +41,13 @@
                 position: absolute;
                 top: 76.5%;
                 left: 28.3%;
+                background-color: red;
+                display: none;
             }
         </style>
     </head>
     <body>
-        <div class="wrapper" style="display: none;">
+        <div class="wrapper">
             <div class="start"></div>
             <div class="rank"></div>
         </div>
@@ -52,7 +56,10 @@
 
         $(function () {
 
-            $('.wrapper').addClass('animated bounceIn').css('display', 'block');
+            // $('.wrapper').addClass('animated bounceIn').css('display', 'block');
+
+            $('.start').addClass('animated bounceInLeft').css('display', 'block');
+            $('.rank').addClass('animated bounceInRight').css('display', 'block');
 
             // 答题页面
             $('.start').on('click', function () {

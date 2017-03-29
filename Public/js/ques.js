@@ -15,12 +15,12 @@ $(function() {
 
     // 首次进入页面请求问题
     $.get('question', function(response) {
-        addCookie('current', response.data.current);
         if (response.status == 200) {
+            addCookie('current', response.data.current);
             loadNextQues(response.data.question);
         } else if (response.status == 403) {
             alert(response.error);
-            location.href = 'index';
+            location.href = 'Index';
         }
     });
 
@@ -79,8 +79,12 @@ $(function() {
     function initFillChoose(ques, options, answer) {
         var chooseLock = false;
 
+
+
         // 题目文字
-        $('#choose .ques-text').text(ques);
+        $('#choose .ques-text').text(ques).css({
+            height: screen.height * 0.24
+        });
 
         // 选项模板
         var optionTpl = '';
