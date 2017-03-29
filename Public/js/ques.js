@@ -172,10 +172,9 @@ $(function() {
                     }
                     $('#choose .submit-answer p').css('color', '#ff0000').text('回答错误');
                 }
-                console.log(getCookie('current'));
                 // 如果本道题已经是本组最后一道，就跳转到Rank页面
                 if (getCookie('current') == 5) {
-                    location.href = 'Result/rightCount/' + totalScore / 20;
+                    location.href = 'Result/?rightCount=' + totalScore / 20;
                 } else {
                     // 请求下一题
                     $.get('question', function(response) {
@@ -249,7 +248,7 @@ $(function() {
         $('#fillblank .ques-text').css('height', screen.height * 0.4 + 'px').prepend('<div>' + ques.replace(/___/, answerFrame) + '</div>');
         // 如果带图需要添加图片
         if (image) {
-            $('#fillblank .ques-text').prepend('<img class="ques-image" src="'+ image +'">');
+            $('#fillblank .ques-text').prepend('<img class="ques-image" src="' + image + '">');
         }
         // 供选择的字
         for (var i = 0; i < options.length; i++) {
@@ -346,9 +345,8 @@ $(function() {
                     $('.right-answer').css('visibility', 'visible');
                     $('#fillblank .submit-answer p').css('color', '#ff001d').text('回答错误');
                 }
-                console.log(getCookie('current'));
                 if (getCookie('current') == 5) {
-                    location.href = 'Result/rightCount/' + totalScore / 20;
+                    location.href = 'Result/?rightCount=' + totalScore / 20;
                 } else {
                     // 请求下一题
                     $.get('question', function(response) {
