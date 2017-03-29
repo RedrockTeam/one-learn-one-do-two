@@ -245,10 +245,8 @@ $(function() {
             answerFrame += '<div class="text-frame" style="height: ' + screen.height * 0.034 + 'px"></div>';
         }
         $('#fillblank .ques-text').css('height', screen.height * 0.4 + 'px').prepend('<div>' + ques.replace(/___/, answerFrame) + '</div>');
-        // 如果带图需要添加图片
-        if (image) {
-            $('#fillblank .ques-text').prepend('<img class="ques-image" src="' + image + '">');
-        }
+        // 最前面需要添加图片
+        $('#fillblank .ques-text').prepend('<img class="ques-image" src="' + image + '">');
         // 供选择的字
         for (var i = 0; i < options.length; i++) {
             // 供选择的字
