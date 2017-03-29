@@ -19,6 +19,11 @@ class IndexController extends BaseController {
         $this->display();
     }
 
+    public function result() {
+        $this->assign('rightCount', I('get.rightCount'));
+        $this->display();
+    }
+
     public function question() {
         $openid = session('openid');
         $users = M('users');
