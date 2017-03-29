@@ -5,10 +5,10 @@ use Think\Controller;
 
 class BaseController extends Controller {
     public function _initialize() {
-        if (APP_DEBUG) {
-            session('nickname', 'test');
-            session('openid', 'asdf');
-        }
+//        if (APP_DEBUG) {
+//            session('nickname', 'test');
+//            session('openid', 'asdf');
+//        }
         $openid = session('openid');
         $nickname = session('nickname');
         if (!$openid || !$nickname) {
