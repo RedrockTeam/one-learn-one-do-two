@@ -7,7 +7,6 @@ class BaseController extends Controller {
     public function _initialize() {
         session('nickname', 'test');
         session('openid', 'asdf');
-        header('Access-Control-Allow-Origin: *');
         $openid = 'asdf';//session('openid');//'ouRCyjhdsj8RQofIOPHc7nX9hA98';//todo
         $nickname = 'test';//session('nickname');
         if (!$openid || !$nickname) {
