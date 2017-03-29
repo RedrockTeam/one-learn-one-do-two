@@ -27,21 +27,14 @@ class BaseController extends Controller {
             $data = array(
                 'openid' => $openid,
                 'nickname' => $nickname,
-                'days'   => 0,
+                'date'   => date('Y-m-d', time()),
                 'count'  => 0,
+                'current'  => 0,
+                'today_learn_group'  => 0,
+                'today_learn_id'  => 0,
                 'imgurl' => urldecode(I('get.headimgurl')),
-                'score'  => 0
             );
             $users->add($data);
-            $userCurrent = M('user_current_question');
-            $currentData = array(
-                'openid' => $openid,
-                'current' => 0,
-                'today_group_count' => 0,
-                'today_learn_id' => json_encode(array()),
-                'date' => date('Y-m-d', time()),
-            );
-            $userCurrent->add($currentData);
         } else {
             $img = I('get.headimgurl');
             if ($nickname && $img) {
