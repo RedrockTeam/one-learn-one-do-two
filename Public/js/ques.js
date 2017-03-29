@@ -18,8 +18,14 @@ $(function() {
             addCookie('current', response.data.current);
             loadNextQues(response.data.question);
         } else if (response.status == 403) {
-            alert(response.error);
-            location.href = 'Index';
+            layer.open({
+                content: response.error,
+                btn: '查看榜单',
+                shadeClose: false,
+                yes: function() {
+                    location.href = 'Rank';
+                }
+            });
         }
     });
 
