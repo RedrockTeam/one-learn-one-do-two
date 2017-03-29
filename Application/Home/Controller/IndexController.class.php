@@ -37,7 +37,6 @@ class IndexController extends BaseController {
         //访问时检查是否为第二天, 重置状态
         if ($user['date'] != date('Y-m-d', time())) {
             $user['date'] = date('Y-m-d', time());
-            $user['time'] = time();
             $user['current'] = 0;
             $user['today_learn_groups'] = 0;
             $user['today_learn_id'] = json_encode(array('choose'=>array(), 'fillblank'=>array()));
