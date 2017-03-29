@@ -20,7 +20,7 @@ class IndexController extends BaseController {
     }
 
     public function result() {
-        $this->assign('rightCount', I('get.rightCount'));
+        $this->assign('rightCount', I('get.rightCount', 0));
         $this->display();
     }
 
@@ -96,7 +96,7 @@ class IndexController extends BaseController {
         $num = 1;
         foreach ($list as &$v) {
             if ($num < 4) {
-                $v['rank'] = 'rank'.$num.'.png';
+                $v['rank'] = 'top'.$num.'.png';
             } else {
                 $v['rank'] = $num;
             }
@@ -130,7 +130,8 @@ class IndexController extends BaseController {
                 'b' => $question['b'],
                 'c' => $question['c']
             ),
-            'answer' => $question['answer']
+            'answer' => $question['answer'],
+            'image' => __APP__.'/Public/images/'.rand(1, 22).'.png'
         );
         return $data;
     }
@@ -167,7 +168,7 @@ class IndexController extends BaseController {
             'answer' => $question['answer']
         );
         if ($question['type'] == 'gushidiangu') {
-            $data['image'] = rand(1, 22).'.png';
+            $data['image'] = __APP__.'/Public/images/'.rand(1, 22).'.png';
         }
         return $data;
     }

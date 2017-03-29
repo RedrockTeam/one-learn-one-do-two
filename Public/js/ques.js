@@ -249,7 +249,7 @@ $(function() {
         $('#fillblank .ques-text').css('height', screen.height * 0.4 + 'px').prepend('<div>' + ques.replace(/___/, answerFrame) + '</div>');
         // 如果带图需要添加图片
         if (image) {
-            $('#fillblank .ques-text').prepend('<img class="ques-image" src="../../../Public/images/' + image + '">');
+            $('#fillblank .ques-text').prepend('<img class="ques-image" src="'+ image +'">');
         }
         // 供选择的字
         for (var i = 0; i < options.length; i++) {
