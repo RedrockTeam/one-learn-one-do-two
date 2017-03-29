@@ -6,7 +6,7 @@ $(function() {
         if (response.status == 200) {
             var data = response.data;
             var list = data.list;
-            $('.my-name').text(data.nickname.length > 15 ? data.nickname.substr(0, 15) + '...' : data.nickname);
+            $('.my-name').text(data.nickname.length > 12 ? data.nickname.substr(0, 12) + '...' : data.nickname);
             $('.my-ranking').text(data.rank);
             var rankListTpl = '';
             for (var i = 0; i < list.length; i++) {

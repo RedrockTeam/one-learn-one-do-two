@@ -69,14 +69,14 @@ p {
 .ques-text {
     color: #2a51a3;
     overflow: auto;
-    font-size: 12px;
+    font-size: 13px;
     padding: 7.5% 5% 5%;
     letter-spacing: 1px;
     background-color: #fff;
 }
 
 .ques-image {
-    height: 40%;
+    height: 80%;
     display: block;
     margin: 0 auto;
     margin-bottom: 5%;
