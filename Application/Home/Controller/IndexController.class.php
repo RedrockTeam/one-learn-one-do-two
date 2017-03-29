@@ -96,7 +96,7 @@ class IndexController extends BaseController {
         $num = 1;
         foreach ($list as &$v) {
             if ($num < 4) {
-                $v['rank'] = 'top'.$num.'.png';
+                $v['rank'] = __APP__.'/Public/images/top'.$num.'.png';
             } else {
                 $v['rank'] = $num;
             }
