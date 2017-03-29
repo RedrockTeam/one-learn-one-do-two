@@ -1,4 +1,5 @@
 .idea
 .DS_Store
 Runtime
+Application/Common/Conf/conf.php
 #ThinkPHP
