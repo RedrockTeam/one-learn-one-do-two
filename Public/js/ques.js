@@ -10,7 +10,6 @@ $(function() {
         height: $(window).height() * 0.759
     });
 
-    var total, current;
     var totalScore = 0;
 
     // 首次进入页面请求问题
@@ -60,31 +59,27 @@ $(function() {
         return ""
     }
 
-    function deleteCookie(name) {
-        var date = new Date();
-        date.setTime(date.getTime() - 10000); //设定一个过去的时间即可
-        document.cookie = name + "=v; expires=" + date.toGMTString();
-    }
-
     // 加载下一题
     function loadNextQues(quesInfo) {
         if (quesInfo.type == 'choose') {
-            initFillChoose(quesInfo.question, quesInfo.options, quesInfo.answer);
+            initFillChoose(quesInfo.question, quesInfo.options, quesInfo.answer, quesInfo.image);
         } else {
             initFillBlank(quesInfo.question, quesInfo.options, quesInfo.answer, quesInfo.image);
         }
     }
 
     // 初始化选择题
-    function initFillChoose(ques, options, answer) {
+    function initFillChoose(ques, options, answer, image) {
         var chooseLock = false;
-
-
 
         // 题目文字
         $('#choose .ques-text').text(ques).css({
             height: screen.height * 0.24
         });
+
+        if (image) {
+            $('#choose .ques-text').prepend('<img class="ques-image" src="' + image + '">');
+        }
 
         // 选项模板
         var optionTpl = '';
@@ -192,8 +187,6 @@ $(function() {
                                 chooseLock = false;
                                 loadNextQues(response.data.question);
                             }, 3000);
-                        } else if (response.status == 403) {
-                            location.href = 'Rank';
                         }
                     });
                 }
@@ -342,7 +335,7 @@ $(function() {
                         }
                     }
                     // 显示正确答案
-                    $('.right-answer').css('visibility', 'visible');
+                    $('.right-answer').css('visibility', 'visible').addClass('animated pulse');
                     $('#fillblank .submit-answer p').css('color', '#ff001d').text('回答错误');
                 }
                 if (getCookie('current') == 5) {
@@ -358,7 +351,7 @@ $(function() {
                                 // 题目文字清空
                                 $('#fillblank .ques-text').text('');
                                 // 正确答案隐藏并清空
-                                $('.right-answer').css('visibility', 'hidden').find('span').text('');
+                                $('.right-answer').css('visibility', 'hidden').removeClass('pulse').find('span').text('');
                                 // 供选择的字清空
                                 $('.choose-text-wrapper').text('');
                                 // 已选择的字清空
@@ -367,8 +360,6 @@ $(function() {
                                 $('#fillblank .submit-answer p').css('color', '#1c3eba').text('确认');
                                 loadNextQues(response.data.question);
                             }, 3000);
-                        } else if (response.status == 403) {
-                            location.href = 'Rank';
                         }
                     });
                 }

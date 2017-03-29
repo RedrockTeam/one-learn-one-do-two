@@ -76,10 +76,9 @@ p {
 }
 
 .ques-image {
+    height: 40%;
     display: block;
     margin: 0 auto;
-    height: 40%;
-    width: 40%;
     margin-bottom: 5%;
 }
 

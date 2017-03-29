@@ -6,21 +6,8 @@ $(function() {
         if (response.status == 200) {
             var data = response.data;
             var list = data.list;
-            $('.my-name').text(data.nickname);
+            $('.my-name').text(data.nickname.length > 15 ? data.nickname.substr(0, 15) + '...' : data.nickname);
             $('.my-ranking').text(data.rank);
-            // var list = [{
-            //     rank: 'top1.png',
-            //     nickname: '测试用户1'
-            // }, {
-            //     rank: 'top2.png',
-            //     nickname: '测试用户12'
-            // }, {
-            //     rank: 'top3.png',
-            //     nickname: '测试用户3'
-            // }, {
-            //     rank: 4,
-            //     nickname: '测试用户4'
-            // }];
             var rankListTpl = '';
             for (var i = 0; i < list.length; i++) {
                 rankListTpl += '<div class="rank-column">';
@@ -29,7 +16,12 @@ $(function() {
                 } else {
                     rankListTpl += '<div class="ranking" style="text-indent: 4px;">' + list[i]['rank'] + '</div>';
                 }
-                rankListTpl += '<div class="nickname">' + list[i]['nickname'] + '</div>';
+                if (list[i]['nickname'].length > 15) {
+                    var nickname = list[i]['nickname'].substr(0, 15) + '...';
+                } else {
+                    var nickname = list[i]['nickname'];
+                }
+                rankListTpl += '<div class="nickname">' + nickname + '</div>';
                 rankListTpl += '</div>';
             }
 
