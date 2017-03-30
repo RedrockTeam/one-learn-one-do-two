@@ -181,9 +181,17 @@ $(function() {
 
                 // 如果本道题已经是本组最后一道，就跳转到Rank页面
                 if (getCookie('current') == 5) {
-                    setTimeout(function() {
-                        location.href = 'Result';
-                    }, 1500);
+                    // 把本题结果返回，不请求下一题
+                    $.post('question', {
+                        isRight: isRight,
+                        current: getCookie('current')
+                    }, function(response) {
+                        if (response.status == 200) {
+                            setTimeout(function() {
+                                location.href = 'Result';
+                            }, 1500);
+                        }
+                    });
                 } else {
                     // 请求下一题
                     $.post('question', {
@@ -352,9 +360,17 @@ $(function() {
                     $('#fillblank .submit-answer p').css('color', '#ff001d').text('回答错误');
                 }
                 if (getCookie('current') == 5) {
-                    setTimeout(function() {
-                        location.href = 'Result';
-                    }, 1500);
+                    // 把本题结果返回，不请求下一题
+                    $.post('question', {
+                        isRight: isRight,
+                        current: getCookie('current')
+                    }, function(response) {
+                        if (response.status == 200) {
+                            setTimeout(function() {
+                                location.href = 'Result';
+                            }, 1500);
+                        }
+                    });
                 } else {
                     // 请求下一题
                     $.post('question', {
