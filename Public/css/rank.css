@@ -17,76 +17,78 @@
             }
 
             .rank-wrapper {
-                height: 80%;
+                height: 90%;
                 width: 88.1%;
                 background-size: 100% 100%;
                 background-image: url(../images/rank-bg.png);
-                margin-top: 16%;
-            }
-
-            .tuanhui-logo {
-                width: 36.4%;
-                position: absolute;
-                top: 2.2%;
-                left: 4%;
+                margin-top: 9%;
             }
 
             .content {
                 width: 82%;
                 height: 76%;
-                padding-top: 32%;
                 margin-left: 6.9%;
+                padding-top: 39.2%;
             }
 
             .my-rank-info {
                 color: #9f9f9f;
                 font-size: 14px;
+                margin-bottom: 4%;
+                text-align: center;
+            }
+
+            .my-avatar {
+                width: 25%;
+                height: 50%;
+                margin: 4% 0 3%;
+                border-radius: 50%;
             }
 
             .my-name, .my-ranking {
                 color: #3c6acb;
-                letter-spacing: 2px;
+                letter-spacing: 1px;
             }
 
 
             .rank-list {
+                height: 65%;
                 margin-top: 3%;
-                height: 89%;
                 overflow: auto;
             }
 
             .rank-column {
-                overflow: hidden;
-                padding: 5%;
                 color: #1c3eba;
-                font-size: 14px;
+                font-size: 12px;
+                padding: 2% 2.5%;
+                overflow: hidden;
             }
 
             .rank-column:first-child {
                 color: #6f6f6f;
             }
 
-            .rank-column:nth-child(even){
+            .rank-column:nth-child(odd){
                 background-color: #edf4fd;
             }
 
             .ranking {
+                float: right;
+                text-align: right;
                 font-weight: bolder;
-                float: left;
-                margin-left: 5%;
             }
 
             .nickname {
-                float: right;
+                float: left;
+                margin-left: 1%;
             }
 
             .return-index {
-                margin-top: 5%;
                 width: 40%;
                 height: 9%;
-
-                margin: 10% 21%;
-                font-size: 16px;
+                margin-top: 5%;
+                margin: 6% 21%;
+                font-size: 15px;
                 text-align: center;
                 font-weight: bolder;
                 letter-spacing: 2px;
