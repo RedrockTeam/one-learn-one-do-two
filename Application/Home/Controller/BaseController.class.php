@@ -30,7 +30,7 @@ class BaseController extends Controller {
                 'date'   => date('Y-m-d', time()),
                 'count'  => 0,
                 'current'  => 0,
-                'today_learn_group'  => 0,
+                'today_learn_groups'  => 0,
                 'today_learn_id'  => 0,
                 'imgurl' => urldecode(I('get.headimgurl')),
             );
