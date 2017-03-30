@@ -56,12 +56,10 @@ html {
             }
 
             .total-score .content {
-                float: left;
-                position: relative;
-                top: 17%;
-                font-size: 20px;
                 color: #173697;
-                left: 24%;
+                font-size: 20px;
+                padding-top: 13%;
+                text-align: center;
             }
 
             .total-score .content .title {
@@ -71,9 +69,8 @@ html {
             }
 
             .total-score .content .score {
-                margin-top: 5%;
-                margin-left: 17%;
-                font-size: 22px;
+                margin-top: 2%;
+                font-size: 30px;
                 color: #1040ad;
                 font-weight: bolder;
             }
