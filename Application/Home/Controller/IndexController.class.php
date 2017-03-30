@@ -40,8 +40,14 @@ class IndexController extends BaseController {
             $user['count'] += 1;
             $user['today_learn_groups'] += 1;
             $users->where(array('openid' => $openid))->save($user);
-        }
 
+        }
+        $current = I('post.current', 0);
+        if ($current == 5) {
+            $this->ajaxReturn(array(
+                'status' => 200
+            ));
+        }
         //访问时检查是否为第二天, 重置状态
         if ($user['date'] != date('Y-m-d', time())) {
             $user['date'] = date('Y-m-d', time());
@@ -50,7 +56,7 @@ class IndexController extends BaseController {
             $user['today_learn_id'] = json_encode(array('choose'=>array(), 'fillblank'=>array()));
         }
 
-        if ($user['current'] == 0) { //重置本组正确数量为0
+        if ($user['current'] == 1) { //重置本组正确数量为0
             $user['today_learn_groups'] = 0;
         }
         $currentLearn = json_decode($user['today_learn_id']);
@@ -69,7 +75,6 @@ class IndexController extends BaseController {
         $data['current'] = $user['current'];
         if ($user['current'] == $this->total) {
             $user['current'] = 0;
-            $user['count'] += 1;
         }
         $data['total'] = $this->total;
         $users->where(array('openid' => $openid))->save($user);
