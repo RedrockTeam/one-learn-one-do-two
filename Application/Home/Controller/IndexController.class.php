@@ -22,8 +22,11 @@ class IndexController extends BaseController {
     }
 
     public function result() {
+        $openid = session('openid');
+        $users = M('users');
+        $user = $users->where(array('openid' => $openid))->find();
         $this->assign('date', time());
-        $this->assign('rightCount', I('get.rightCount', 0));
+        $this->assign('rightCount', $user['today_learn_groups']);
         $this->display();
     }
 
@@ -31,50 +34,55 @@ class IndexController extends BaseController {
         $openid = session('openid');
         $users = M('users');
         $user = $users->where(array('openid' => $openid))->find();
-
-        //todo 学习限制
-
-        //访问时检查是否为第二天, 重置状态
-        if ($user['date'] != date('Y-m-d', time())) {
-            $user['date'] = date('Y-m-d', time());
-            $user['current'] = 0;
-            $user['today_learn_groups'] = 0;
-            $user['today_learn_id'] = json_encode(array('choose'=>array(), 'fillblank'=>array()));
-        }
-
-        //检查学习题目上限
-        if ($user['today_learn_groups'] == 5) {
+        if (IS_POST) {
+            $isRight = I('post.isRight', 'false');
+            $isRight = $isRight == 'true'? true : false;
+            if ($isRight) {
+                $user['count'] += 1;
+                $user['today_learn_groups'] += 1;
+                $users->where(array('openid' => $openid))->save($user);
+            }
             $this->ajaxReturn(array(
-                'status' => 403,
-                'error'  => '每天最多只能学五组题'
+                'status' => 200,
             ));
         }
+        if (IS_GET) {
+            //访问时检查是否为第二天, 重置状态
+            if ($user['date'] != date('Y-m-d', time())) {
+                $user['date'] = date('Y-m-d', time());
+                $user['current'] = 0;
+                $user['today_learn_groups'] = 0;
+                $user['today_learn_id'] = json_encode(array('choose'=>array(), 'fillblank'=>array()));
+            }
 
-        $currentLearn = json_decode($user['today_learn_id']);
-        if ($user['current'] < $this->chooseCount) {
-            $data['question'] = $this->fillblank($currentLearn, $user['current']);
-        } elseif ($user['current'] >= $this->chooseCount && $user['current'] < $this->total){
-            $data['question'] = $this->choose($currentLearn);
-        } else {
+            if ($user['current'] == 0) { //重置本组正确数量为0
+                $user['today_learn_groups'] = 0;
+            }
+            $currentLearn = json_decode($user['today_learn_id']);
+            if ($user['current'] < $this->chooseCount) {
+                $data['question'] = $this->fillblank($currentLearn, $user['current']);
+            } elseif ($user['current'] >= $this->chooseCount && $user['current'] < $this->total){
+                $data['question'] = $this->choose($currentLearn);
+            } else {
+                $this->ajaxReturn(array(
+                    'status' => 500,
+                    'error' => '当前题目未知'
+                ));
+            }
+            $user['today_learn_id'] = json_encode($currentLearn);
+            $user['current'] += 1;
+            $data['current'] = $user['current'];
+            if ($user['current'] == $this->total) {
+                $user['current'] = 0;
+                $user['count'] += 1;
+            }
+            $data['total'] = $this->total;
+            $users->where(array('openid' => $openid))->save($user);
             $this->ajaxReturn(array(
-                'status' => 500,
-                'error' => '当前题目未知'
+                'status' => 200,
+                'data'  => $data
             ));
         }
-        $user['today_learn_id'] = json_encode($currentLearn);
-        $user['current'] += 1;
-        $data['current'] = $user['current'];
-        if ($user['current'] == $this->total) {
-            $user['current'] = 0;
-            $user['count'] += 1;
-            $user['today_learn_groups'] += 1;
-        }
-        $data['total'] = $this->total;
-        $users->where(array('openid' => $openid))->save($user);
-        $this->ajaxReturn(array(
-            'status' => 200,
-            'data'  => $data
-        ));
     }
 
     public function getRank() {
