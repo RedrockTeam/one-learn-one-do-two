@@ -155,8 +155,6 @@ class IndexController extends BaseController {
         }
         if ($current == 1) {
             $map['special_type'] = 'qingniangongzuo';
-        } else { //todo
-            $map['type'] = 'gushidiangu';
         }
         if ($currentData->fillblank) {
             $map['id'] = array('NOT IN', $currentData->fillblank);
