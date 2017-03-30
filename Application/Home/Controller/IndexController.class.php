@@ -34,55 +34,49 @@ class IndexController extends BaseController {
         $openid = session('openid');
         $users = M('users');
         $user = $users->where(array('openid' => $openid))->find();
-        if (IS_POST) {
-            $isRight = I('post.isRight', 'false');
-            $isRight = $isRight == 'true'? true : false;
-            if ($isRight) {
-                $user['count'] += 1;
-                $user['today_learn_groups'] += 1;
-                $users->where(array('openid' => $openid))->save($user);
-            }
-            $this->ajaxReturn(array(
-                'status' => 200,
-            ));
-        }
-        if (IS_GET) {
-            //访问时检查是否为第二天, 重置状态
-            if ($user['date'] != date('Y-m-d', time())) {
-                $user['date'] = date('Y-m-d', time());
-                $user['current'] = 0;
-                $user['today_learn_groups'] = 0;
-                $user['today_learn_id'] = json_encode(array('choose'=>array(), 'fillblank'=>array()));
-            }
-
-            if ($user['current'] == 0) { //重置本组正确数量为0
-                $user['today_learn_groups'] = 0;
-            }
-            $currentLearn = json_decode($user['today_learn_id']);
-            if ($user['current'] < $this->chooseCount) {
-                $data['question'] = $this->fillblank($currentLearn, $user['current']);
-            } elseif ($user['current'] >= $this->chooseCount && $user['current'] < $this->total){
-                $data['question'] = $this->choose($currentLearn);
-            } else {
-                $this->ajaxReturn(array(
-                    'status' => 500,
-                    'error' => '当前题目未知'
-                ));
-            }
-            $user['today_learn_id'] = json_encode($currentLearn);
-            $user['current'] += 1;
-            $data['current'] = $user['current'];
-            if ($user['current'] == $this->total) {
-                $user['current'] = 0;
-                $user['count'] += 1;
-            }
-            $data['total'] = $this->total;
+        $isRight = I('post.isRight', 'false');
+        $isRight = $isRight == 'true' ? true : false;
+        if ($isRight) {
+            $user['count'] += 1;
+            $user['today_learn_groups'] += 1;
             $users->where(array('openid' => $openid))->save($user);
+        }
+
+        //访问时检查是否为第二天, 重置状态
+        if ($user['date'] != date('Y-m-d', time())) {
+            $user['date'] = date('Y-m-d', time());
+            $user['current'] = 0;
+            $user['today_learn_groups'] = 0;
+            $user['today_learn_id'] = json_encode(array('choose'=>array(), 'fillblank'=>array()));
+        }
+
+        if ($user['current'] == 0) { //重置本组正确数量为0
+            $user['today_learn_groups'] = 0;
+        }
+        $currentLearn = json_decode($user['today_learn_id']);
+        if ($user['current'] < $this->chooseCount) {
+            $data['question'] = $this->fillblank($currentLearn, $user['current']);
+        } elseif ($user['current'] >= $this->chooseCount && $user['current'] < $this->total){
+            $data['question'] = $this->choose($currentLearn);
+        } else {
             $this->ajaxReturn(array(
-                'status' => 200,
-                'data'  => $data
+                'status' => 500,
+                'error' => '当前题目未知'
             ));
         }
+        $user['today_learn_id'] = json_encode($currentLearn);
+        $user['current'] += 1;
+        $data['current'] = $user['current'];
+        if ($user['current'] == $this->total) {
+            $user['current'] = 0;
+            $user['count'] += 1;
+        }
+        $data['total'] = $this->total;
+        $users->where(array('openid' => $openid))->save($user);
+        $this->ajaxReturn(array(
+            'status' => 200,
+            'data'  => $data
+        ));
     }
 
     public function getRank() {
