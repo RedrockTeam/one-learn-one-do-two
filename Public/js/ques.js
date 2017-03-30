@@ -183,12 +183,12 @@ $(function() {
                 if (getCookie('current') == 5) {
                     setTimeout(function() {
                         location.href = 'Result';
-                    }, 3000);
+                    }, 1500);
                 } else {
                     // 请求下一题
                     $.post('question', {
                         isRight: isRight,
-                        current: current
+                        current: getCookie('current')
                     }, function(response) {
                         if (response.status == 200) {
                             setCookie('current', response.data.current);
@@ -354,7 +354,7 @@ $(function() {
                 if (getCookie('current') == 5) {
                     setTimeout(function() {
                         location.href = 'Result';
-                    }, 3000);
+                    }, 1500);
                 } else {
                     // 请求下一题
                     $.post('question', {
