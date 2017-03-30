@@ -144,7 +144,7 @@ class IndexController extends BaseController {
                 'c' => $question['c']
             ),
             'answer' => $question['answer'],
-            'image' => __APP__.'/Public/images/'.rand(1, 22).'.png'
+//            'image' => __APP__.'/Public/images/'.rand(1, 22).'.png'
         );
         return $data;
     }
@@ -155,6 +155,8 @@ class IndexController extends BaseController {
         }
         if ($current == 1) {
             $map['special_type'] = 'qingniangongzuo';
+        } else { //todo
+            $map['type'] = 'gushidiangu';
         }
         if ($currentData->fillblank) {
             $map['id'] = array('NOT IN', $currentData->fillblank);
@@ -180,7 +182,10 @@ class IndexController extends BaseController {
             'options' => $options,
             'answer' => $question['answer']
         );
-        $data['image'] = __APP__.'/Public/images/'.rand(1, 22).'.png';
+        if ($question['type'] == 'gushidiangu') {
+            $data['question'] = $data['question'].'<br>'.$question['from'];
+        }
+//        $data['image'] = __APP__.'/Public/images/'.rand(1, 22).'.png';
         return $data;
     }
 
