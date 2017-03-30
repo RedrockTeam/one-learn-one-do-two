@@ -90,10 +90,9 @@ p {
 
 .answer-box {
     width: 88%;
-    padding-left: 3.12%;
-    padding-right: 5%;
-    background-color: #fff;
+    padding: 0 3%;
     border-radius: 50px;
+    background-color: #fff;
     border: 2px solid #1c3eba;
 }
 
@@ -104,10 +103,6 @@ p {
 .answer-box-selected-right {
     background-color: #70ee38;
     color: #1c3eba;
-}
-
-.answer-box-selected-error {
-    background-color: #ff0000;
 }
 
 .left-join {
@@ -127,11 +122,10 @@ p {
 }
 
 .answer-box .answer-option {
+    width: 13%;
     float: left;
-    width: 12.8%;
-    height: 70.1%;
-    margin-right: 4%;
     margin-top: 2%;
+    margin-right: 4%;
     text-align: center;
     border-radius: 50%;
     border: 2px solid #1c3eba;
@@ -141,16 +135,36 @@ p {
     background-color: #fff;
 }
 
+.answer-option-selected-right {
+    background-size: 70%;
+    background-repeat: no-repeat;
+    border-color: #1eb468 !important;
+    background-position: center center;
+    background-image: url(../images/selected-right.png);
+}
+
+.answer-option-selected-error {
+    background-size: 55%;
+    background-repeat: no-repeat;
+    border-color: #ff2525 !important;
+    background-position: center center;
+    background-image: url(../images/selected-error.png);
+}
+
 .answer-box .answer-option span {
     color: #1c3eba;
     font-size: 18px;
 }
 
 .answer-box .answer-text {
+    width: 79%;
+    float: left;
     color: #2a51a3;
     font-size: 12px;
+    overflow: hidden;
     letter-spacing: 2px;
-    position: relative;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .answer-text-selected {

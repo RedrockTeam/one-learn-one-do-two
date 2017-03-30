@@ -64,9 +64,9 @@
             }
 
             .help {
-                top: 2.4%;
+                top: 2%;
                 width: 7%;
-                right: 4%;
+                right: 4.2%;
                 height: 4%;
                 position: absolute;
             }
@@ -87,11 +87,11 @@
             }
 
             .developer-info .content p {
-                margin-bottom: 2%;
                 color: #1f44bd;
                 font-size: 14px;
-                letter-spacing: 2px;
                 font-weight: bolder;
+                margin-bottom: 1.8%;
+                letter-spacing: 2px;
             }
 
         </style>
@@ -132,7 +132,7 @@
 
             $('.help').on('click', function () {
                 $('.developer-info').addClass('pulse').css('display', 'block');
-                $('.dimmer').css('display', 'block').on('click', function () {
+                $('.dimmer').css('display', 'block').off('click').on('click', function () {
                     $('.dimmer').css('display', 'none');
                     $('.developer-info').removeClass('pulse').css('display', 'none');
                 });

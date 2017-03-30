@@ -147,7 +147,8 @@ $(function() {
         $('#choose .submit-answer').off('click').on('click', function(event) {
             if (selectedAnswer && !chooseLock) {
                 chooseLock = true;
-                // 选择正确
+
+                // 判断选择正误操作
                 if (selectedAnswer == answer) {
                     // 总分加20
                     totalScore = totalScore + 20;
@@ -158,24 +159,32 @@ $(function() {
                         index = 2;
                     }
                     $('.answer-box').eq(index).addClass('answer-box-selected-right');
-                    $('#choose .submit-answer p').css('color', '#70ee38').text('回答正确');
+                    // 按钮文字改变
+                    $('#choose .submit-answer p').css('color', '#1fa500').text('回答正确');
+                    // 选项改变
+                    $('.answer-box').eq(index).find('.answer-option').text('').addClass('answer-option-selected-right');
                 } else {
                     for (var i = 0; i < $('.answer-box .answer-text').length; i++) {
+                        var answerBox = $('.answer-box').eq(i);
                         // 错误答案标红
-                        if ($('.answer-box').eq(i).hasClass('answer-box-selected')) {
-                            $('.answer-box').eq(i).addClass('answer-box-selected-error');
+                        if (answerBox.hasClass('answer-box-selected')) {
+                            answerBox.find('.answer-option').text('').addClass('answer-option-selected-error');
                         }
                         // 正确答案标绿
-                        if ($('.answer-box').eq(i).attr('data-option') == answer) {
-                            $('.answer-box').eq(i).addClass('answer-box-selected-right');
-                            $('.answer-box').eq(i).find('.answer-option').addClass('answer-option-selected');
+                        if (answerBox.attr('data-option') == answer) {
+                            answerBox.addClass('answer-box-selected-right');
+                            answerBox.find('.answer-option').text('').addClass('answer-option-selected answer-option-selected-right');
                         }
                     }
                     $('#choose .submit-answer p').css('color', '#ff0000').text('回答错误');
                 }
+
+
                 // 如果本道题已经是本组最后一道，就跳转到Rank页面
                 if (getCookie('current') == 5) {
-                    location.href = 'Result/?rightCount=' + totalScore / 20;
+                    setTimeout(function() {
+                        location.href = 'Result/?rightCount=' + totalScore / 20;
+                    }, 3000);
                 } else {
                     // 请求下一题
                     $.get('question', function(response) {
@@ -212,19 +221,17 @@ $(function() {
         $('.answer-box').css('height', screen.height * 0.077);
         $('.answer-box .answer-option').css('height', screen.height * 0.055);
 
-        // 设置选项文字上下居中
-        for (var i = 0; i < $('.answer-box .answer-text').length; i++) {
-            $('.answer-box .answer-text').eq(i).css(
-                'top',
-                ((screen.height * 0.046) / 2) + 'px'
-            );
-        }
+        $('.answer-box .answer-text').css({
+            'height': screen.height * 0.077,
+            'line-height': screen.height * 0.077 + 'px'
+        });
+
         $('.answer-box .answer-option').find('span').css('line-height', (screen.height * 0.055 - 2) + 'px');
 
-        $('#choose .submit-answer').css('height', screen.height * 0.09);
-
-        $('#choose .submit-answer').css('line-height', screen.height * 0.09 - 8 + 'px');
-
+        $('#choose .submit-answer').css({
+            'height': screen.height * 0.09,
+            'line-height': screen.height * 0.09 - 8 + 'px'
+        });
     }
 
     // 初始化填空题
@@ -309,7 +316,7 @@ $(function() {
                             $('.choose-text').eq(i).addClass('choose-text-selected-right');
                         }
                     }
-                    $('.submit-answer p').css('color', '#00b615').text('回答正确');
+                    $('.submit-answer p').css('color', '#1fa500').text('回答正确');
                 } else { // 答案错误
                     var errorPoint = [];
                     for (var i = 0; i < choosedText.length; i++) {
@@ -343,7 +350,9 @@ $(function() {
                     $('#fillblank .submit-answer p').css('color', '#ff001d').text('回答错误');
                 }
                 if (getCookie('current') == 5) {
-                    location.href = 'Result/?rightCount=' + totalScore / 20;
+                    setTimeout(function() {
+                        location.href = 'Result/?rightCount=' + totalScore / 20;
+                    }, 3000);
                 } else {
                     // 请求下一题
                     $.get('question', function(response) {
