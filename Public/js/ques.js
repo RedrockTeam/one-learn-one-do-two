@@ -100,6 +100,7 @@ $(function() {
         }
         $('#choose .answer-wrapper').append(optionTpl);
 
+        $('#choose .submit-answer p').css('color', '#1c3eba').text('确认');
 
         // 选择题是否选择答案flag
         var selectedAnswer = '';
@@ -272,7 +273,7 @@ $(function() {
         // 显示正确答案
         $('.right-answer span').text(answer);
 
-        $('#choose .submit-answer p').css('color', '#1c3eba').text('确认');
+        $('#fillblank .submit-answer p').css('color', '#1c3eba').text('确认');
 
         // 已选择的字
         var selectedText = [];
@@ -354,6 +355,9 @@ $(function() {
                     $('.right-answer').css('visibility', 'visible').addClass('animated pulse');
                     $('#fillblank .submit-answer p').css('color', '#ff001d').text('回答错误');
                 }
+
+
+
                 if (getCookie('current') == 5) {
                     // 把本题结果返回，不请求下一题
                     $.post('question', {
