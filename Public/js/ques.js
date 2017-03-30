@@ -76,16 +76,16 @@ $(function() {
 
     // 初始化选择题
     function initFillChoose(ques, options, answer, image) {
-        var chooseLock = false;
 
+        var chooseLock = false;
+        var isRight = false;
         // 题目文字
         $('#choose .ques-text').text(ques).css({
             height: screen.height * 0.24
         });
 
-        if (image) {
-            $('#choose .ques-text').prepend('<img class="ques-image" src="' + image + '">');
-        }
+        // 题目最前面添加图片
+        $('#choose .ques-text').prepend('<img class="ques-image" src="' + image + '">');
 
         // 选项模板
         var optionTpl = '';
@@ -150,8 +150,7 @@ $(function() {
 
                 // 判断选择正误操作
                 if (selectedAnswer == answer) {
-                    // 总分加20
-                    totalScore = totalScore + 20;
+                    isRight = true;
                     var index = 0;
                     if (selectedAnswer == 'b') {
                         index = 1;
@@ -183,11 +182,14 @@ $(function() {
                 // 如果本道题已经是本组最后一道，就跳转到Rank页面
                 if (getCookie('current') == 5) {
                     setTimeout(function() {
-                        location.href = 'Result/?rightCount=' + totalScore / 20;
+                        location.href = 'Result';
                     }, 3000);
                 } else {
                     // 请求下一题
-                    $.get('question', function(response) {
+                    $.post('question', {
+                        isRight: isRight,
+                        current: current
+                    }, function(response) {
                         if (response.status == 200) {
                             setCookie('current', response.data.current);
                             setTimeout(function() {
@@ -239,7 +241,8 @@ $(function() {
 
         // 未点击确认前为false
         // 点击确认之后就锁住
-        var lock = false;
+        var fillBlacnkLock = false;
+        var isRight = false;
 
         // 题目文字
         var answerText = '',
@@ -273,7 +276,7 @@ $(function() {
 
         // 供选择的字点击事件
         $('.choose-text-wrapper .choose-text').off('click').on('click', function(event) {
-            if (!lock) {
+            if (!fillBlacnkLock) {
                 var text = $(event.currentTarget);
                 var index = text.attr('data-index');
                 // 取消选择的操作
@@ -299,8 +302,8 @@ $(function() {
         // 确认按钮
         $('#fillblank .submit-answer').off('click').on('click', function() {
             // 全部填满且未点击过才能点击确认
-            if (selectedText.length == answer.length && !lock) {
-                lock = true;
+            if (selectedText.length == answer.length && !fillBlacnkLock) {
+                fillBlacnkLock = true;
                 var choosedText = '';
                 for (var i = 0; i < selectedText.length; i++) {
                     choosedText += selectedText[i];
@@ -308,8 +311,7 @@ $(function() {
 
                 // 答案正确
                 if (choosedText == answer) {
-                    // 总分加20
-                    totalScore = totalScore + 20;
+                    isRight = true;
                     $('#fillblank .text-frame').addClass('text-frame-filled-right');
                     for (var i = 0; i < $('.choose-text').length; i++) {
                         if ($('.choose-text').eq(i).hasClass('choose-text-selected')) {
@@ -351,11 +353,14 @@ $(function() {
                 }
                 if (getCookie('current') == 5) {
                     setTimeout(function() {
-                        location.href = 'Result/?rightCount=' + totalScore / 20;
+                        location.href = 'Result';
                     }, 3000);
                 } else {
                     // 请求下一题
-                    $.get('question', function(response) {
+                    $.post('question', {
+                        isRight: isRight,
+                        current: getCookie('current')
+                    }, function(response) {
                         if (response.status == 200) {
                             setCookie('current', response.data.current);
                             setTimeout(function() {
