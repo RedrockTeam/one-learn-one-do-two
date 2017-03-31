@@ -12,21 +12,23 @@
                 height: 84%;
                 background-size: 100% 100%;
                 -webkit-tap-highlight-color:rgba(0,0,0,0);
-                background-image: url(../images/rank.png);
+                background-image: url(../images/test.png);
             }
 
-            .rank-wrapper {
-                margin-left: 5%;
-                height: 97%;
-                background-size: 100% 100%;
-                background-image: url(../images/rank-bg.png);
-            }
+            // .rank-wrapper {
+            //     height: 100%;
+            //     margin-left: 5%;
+            //     background-size: contain;
+            //     background-repeat: no-repeat;
+            //     background-image: url(../images/rank-bg.png);
+            // }
 
             .content {
-                width: 68%;
-                height: 81%;
-                padding-top: 36.2%;
-                padding-left: 14.5%;
+                position: absolute;
+                height: 57.2%;
+                width: 66.46%;
+                left: 16.7%;
+                top: 20%;
             }
 
             .my-rank-info {
@@ -50,7 +52,7 @@
 
 
             .rank-list {
-                height: 57%;
+                height: 65%;
                 margin-top: 3%;
                 overflow: auto;
             }
@@ -89,11 +91,12 @@
             }
 
             .return-index {
+                left: 28%;
+                // border: 1px solid red;
                 width: 40%;
                 height: 9%;
-                margin: 3% 31%;
-                background-size: 100% 100%;
-                background-image: url(../images/return-index.png);
+                bottom: 10%;
+                position: absolute;
             }
 
             .return-index a {
