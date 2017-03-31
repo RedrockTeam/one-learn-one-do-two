@@ -28,6 +28,8 @@ $(function() {
             }
 
             $('.rank-list').append(rankListTpl);
+
+            $('.rank-column .nickname > div').css('line-height', $('.rank-column').eq(1).height() - 2 + 'px');
         }
     });
 
