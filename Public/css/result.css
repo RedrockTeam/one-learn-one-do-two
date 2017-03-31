@@ -1,7 +1,7 @@
 
 @font-face {
-    font-family: 'hw-w5';
-    src: url('hk-w5.ttc');
+    font-family: 'hk-w5';
+    src: url('../font/hk.ttf');
 }
 
 
@@ -10,7 +10,7 @@ html {
     padding: 0;
     width: 100%;
     height: 100%;
-    font-family: "hw-w5", "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+    font-family: "hk-w5", "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
 }
 
 body {
