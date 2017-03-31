@@ -80,7 +80,7 @@ $(function() {
         var chooseLock = false;
         var isRight = false;
         // 题目文字
-        $('#choose .ques-text').html(ques).css({
+        $('#choose .ques-text').html(ques.replace(/()/, '(<span style="color: #fff">本段内容无实际意思</span>)')).css({
             height: screen.height * 0.24
         });
 
