@@ -60,7 +60,7 @@ class IndexController extends BaseController {
             $user['today_learn_id'] = json_encode(array('choose'=>array(), 'fillblank'=>array()));
         }
 
-        if ($user['current'] == 1) { //重置本组正确数量为0
+        if ($user['current'] == 0) { //重置本组正确数量为0
             $user['today_learn_groups'] = 0;
         }
         $currentLearn = json_decode($user['today_learn_id']);
