@@ -32,16 +32,16 @@
             }
 
             .my-rank-info {
+                height: 23%;
+                padding: 3%;
                 color: #9f9f9f;
                 font-size: 14px;
-                margin-bottom: 4%;
                 text-align: center;
             }
 
             .my-avatar {
-                width: 25%;
-                height: 50%;
-                margin: 4% 0 3%;
+                width: 22%;
+                height: 60%;
                 border-radius: 50%;
             }
 
@@ -52,8 +52,7 @@
 
 
             .rank-list {
-                height: 65%;
-                margin-top: 3%;
+                height: 71%;
                 overflow: auto;
             }
 
