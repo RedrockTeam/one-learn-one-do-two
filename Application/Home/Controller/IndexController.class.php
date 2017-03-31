@@ -7,21 +7,50 @@ class IndexController extends BaseController {
     private $chooseCount = 3;
     private $appid = 'wx81a4a4b77ec98ff4';
     private $acess_token = 'gh_68f0a1ffc303';
+    private function shareContent() {
+        $openid = session('openid');
+        $users = M('users');
+        $currentData = $users->where(array('openid' => $openid))->find();
+        $share = '快来参加“学讲话 问问答”测试特训，PK打榜，争做合格共青团员';
+        if ($currentData['count'] != 0){
+            $user = $users->where(array('openid' => $openid))->find();
+            $map['count'] = array('EGT', $user['count']);
+            $rank = $users->where($map)->count();
+            $rank += 1;
+            if ($rank <= 50) {
+                $real = $users->order('count desc')->field('nickname, imgurl')->limit(50)->select();
+                foreach ($real as $key => $value) {
+                    if ($value['nickname'] == $user['nickname']) {
+                        $rank = $key+1;
+                    }
+                }
+            }
+            $share = '我正在参加“学讲话 问问答”测试特训，排第'.$rank.'名。你也加入吧！';
+        }
+        $signature = $this->JSSDKSignature();
+        $this->assign('signature', $signature);
+        $this->assign('appid', $this->appid);
+        $this->assign('share', $share);
+    }
     public function index() {
+        $this->shareContent();
         $this->display();
     }
 
     public function ques() {
+        $this->shareContent();
         $this->assign('date', time());
         $this->display();
     }
 
     public function rank() {
+        $this->shareContent();
         $this->assign('date', time());
         $this->display();
     }
 
     public function result() {
+        $this->shareContent();
         $openid = session('openid');
         $users = M('users');
         $user = $users->where(array('openid' => $openid))->find();
@@ -31,6 +60,7 @@ class IndexController extends BaseController {
     }
 
     public function intro() {
+        $this->shareContent();
         $this->display();
     }
 
