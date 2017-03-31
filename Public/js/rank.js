@@ -17,7 +17,7 @@ $(function() {
                 } else {
                     var nickname = list[i]['nickname'];
                 }
-                rankListTpl += '<div class="nickname"><img src="' + list[i]['avatar'] + '"><div style="margin-left: 4%; float: left; font-size: 14px;">' + nickname + '</div></div>';
+                rankListTpl += '<div class="nickname"><img src="' + list[i]['avatar'] + '"><div style="margin-left: 4%; float: left; font-size: 15px;">' + nickname + '</div></div>';
 
                 if (list[i]['rank'] != Number(list[i]['rank'])) {
                     rankListTpl += '<div class="ranking" style="margin-right: 3%"><img style="width: 55%; height: 52%;" src="' + list[i]['rank'] + '"></div>';
