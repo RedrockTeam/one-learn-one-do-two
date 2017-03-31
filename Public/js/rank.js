@@ -12,16 +12,17 @@ $(function() {
             var rankListTpl = '';
             for (var i = 0; i < list.length; i++) {
                 rankListTpl += '<div class="rank-column">';
-                if (list[i]['nickname'].length > 15) {
-                    var nickname = list[i]['nickname'].substr(0, 15) + '...';
+                if (list[i]['nickname'].length >= 10) {
+                    var nickname = list[i]['nickname'].substr(0, 9) + '...';
                 } else {
                     var nickname = list[i]['nickname'];
                 }
-                rankListTpl += '<div class="nickname">' + nickname + '</div>';
+                rankListTpl += '<div class="nickname"><img src="' + list[i]['avatar'] + '"><div style="margin-left: 4%; float: left; font-size: 14px;">' + nickname + '</div></div>';
+
                 if (list[i]['rank'] != Number(list[i]['rank'])) {
                     rankListTpl += '<div class="ranking"><img style="width: 55%; height: 52%;" src="' + list[i]['rank'] + '"></div>';
                 } else {
-                    rankListTpl += '<div class="ranking">' + list[i]['rank'] + '</div>';
+                    rankListTpl += '<div class="ranking"><span>' + list[i]['rank'] + '</span></div>';
                 }
                 rankListTpl += '</div>';
             }

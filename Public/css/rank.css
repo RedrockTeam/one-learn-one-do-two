@@ -78,8 +78,15 @@
             }
 
             .nickname {
+                width: 80%;
                 float: left;
                 margin-left: 1%;
+            }
+
+            .nickname img {
+                width: 12%;
+                float: left;
+                border-radius: 50%;
             }
 
             .return-index {
