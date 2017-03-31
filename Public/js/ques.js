@@ -80,7 +80,7 @@ $(function() {
         var chooseLock = false;
         var isRight = false;
         // 题目文字
-        $('#choose .ques-text').text(ques).css({
+        $('#choose .ques-text').html(ques).css({
             height: screen.height * 0.24
         });
 
