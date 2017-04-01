@@ -181,10 +181,10 @@ class IndexController extends BaseController {
 
     private function fillblank(&$currentData, $current) {
         if ($current == 0) {
-            $map['special_type'] = 'congyanzhidang';
+            $map['special_type'] = 'qingniangongzuo';
         }
         if ($current == 1) {
-            $map['special_type'] = 'qingniangongzuo';
+            $map['special_type'] = 'congyanzhidang';
         }
         if ($currentData->fillblank) {
             $map['id'] = array('NOT IN', $currentData->fillblank);
