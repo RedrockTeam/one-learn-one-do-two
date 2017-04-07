@@ -207,7 +207,7 @@ $(function() {
                                 selectedAnswer = '';
                                 chooseLock = false;
                                 loadNextQues(response.data.question);
-                            }, 3000);
+                            }, 2000);
                         }
                     });
                 }
@@ -388,7 +388,7 @@ $(function() {
                                 // 已选择的字清空
                                 selectedText = [];
                                 loadNextQues(response.data.question);
-                            }, 3000);
+                            }, 2000);
                         }
                     });
                 }
